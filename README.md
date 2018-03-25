@@ -13,6 +13,7 @@ Visual Studio, Bitbucket, Discord.
 ### Contribution guidelines ###
 
 Assign JIRA tasks to self.
+Clean project before commits.
 
 ### Who do I talk to? ###
 
