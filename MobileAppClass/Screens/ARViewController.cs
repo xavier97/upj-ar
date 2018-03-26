@@ -13,6 +13,7 @@ namespace UPJARProject
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+            Console.WriteLine("hello");
             // Perform any additional setup after loading the view, typically from a nib.
         }
 
