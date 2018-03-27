@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleIdentifier</key>
-	<string>com.acme.mobileappclass</string>
+	<string>com.acme.upjar</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
@@ -48,5 +48,7 @@
 		<string>MKDirectionsModePedestrian</string>
 		<string>MKDirectionsModeOther</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<true/>
 </dict>
 </plist>

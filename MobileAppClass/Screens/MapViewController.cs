@@ -22,9 +22,8 @@ namespace UPJARProject
 
             Title = "UPJ Tour";
 
-            mapView = new MKMapView(View.Bounds);
-            mapView.AutoresizingMask = UIViewAutoresizing.FlexibleDimensions;
-            View.AddSubview(mapView);
+            mapView = new MKMapView(UIScreen.MainScreen.Bounds);
+            View = mapView;
 
             // Request permission to access device location  
             location.RequestWhenInUseAuthorization();
@@ -32,13 +31,13 @@ namespace UPJARProject
             // Indicates User Location  
             mapView.ShowsUserLocation = true;
 
-            //This snippet lets you toggle between Map Types  
+            // This snippet lets you toggle between Map Types  
             int typesWidth = 260, typesHeight = 30, distanceFromBottom = 60;
             mapTypeSelection = new UISegmentedControl(new CGRect((View.Bounds.Width - typesWidth) / 2, View.Bounds.Height - distanceFromBottom, typesWidth, typesHeight));
             mapTypeSelection.InsertSegment("Standard", 0, false);
             mapTypeSelection.InsertSegment("Satellite", 1, false);
             mapTypeSelection.InsertSegment("Hybrid", 2, false);
-            mapTypeSelection.SelectedSegment = 0; // Standard is the default selection  
+            mapTypeSelection.SelectedSegment = 2; // Hybrid is the default selection  
             mapTypeSelection.AutoresizingMask = UIViewAutoresizing.FlexibleTopMargin;
 
             mapTypeSelection.ValueChanged += (s, e) =>
