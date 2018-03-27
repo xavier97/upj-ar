@@ -33,7 +33,7 @@ namespace UPJARProject
 
             // This snippet lets you toggle between Map Types  
             int typesWidth = 260, typesHeight = 30, distanceFromBottom = 60;
-            mapTypeSelection = new UISegmentedControl(new CGRect((View.Bounds.Width - typesWidth) / 2, View.Bounds.Height - distanceFromBottom, typesWidth, typesHeight));
+            mapTypeSelection = new UISegmentedControl(new CGRect((View.Bounds.Width - typesWidth) / 3, View.Bounds.Height - distanceFromBottom, typesWidth, typesHeight));
             mapTypeSelection.InsertSegment("Standard", 0, false);
             mapTypeSelection.InsertSegment("Satellite", 1, false);
             mapTypeSelection.InsertSegment("Hybrid", 2, false);
