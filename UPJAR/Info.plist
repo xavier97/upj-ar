@@ -5,7 +5,7 @@
 	<key>CFBundleName</key>
 	<string>UPJ AR</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.companyname.UPJ-AR</string>
+	<string>UPJAR.com-companyname-UPJ</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
@@ -50,5 +50,7 @@
 		<string>MKDirectionsModePedestrian</string>
 		<string>MKDirectionsModeOther</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>To augment your reality</string>
 </dict>
 </plist>
