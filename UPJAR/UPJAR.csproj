@@ -94,6 +94,7 @@
   <ItemGroup>
     <SceneKitAsset Include="art.scnassets\ship.dae" />
     <SceneKitAsset Include="art.scnassets\texture.png" />
+    <SceneKitAsset Include="art.scnassets\cube.dae" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />

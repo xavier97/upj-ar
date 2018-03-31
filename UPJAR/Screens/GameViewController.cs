@@ -11,9 +11,8 @@ namespace UPJAR
     public partial class GameViewController : UIViewController
     {
 
-      
 
-        private ARSCNView sceneView;
+
         protected GameViewController(IntPtr handle) : base(handle) { }
 
         public override void DidReceiveMemoryWarning()
@@ -26,50 +25,47 @@ namespace UPJAR
      
         public override void ViewDidLoad()
         {
-            base.ViewDidLoad();
-
-
-            sceneView = new ARSCNView()
-            {
-                Frame = View.Frame,
-                DebugOptions = ARSCNDebugOptions.ShowFeaturePoints |
-                ARSCNDebugOptions.ShowWorldOrigin,
-                UserInteractionEnabled = true
-            };
-
-            //View.AddSubview(sceneView);
-
-           
-           
-        }
-
-    
-        public override void ViewWillAppear(bool animated)
-        {
-            base.ViewWillAppear(animated);
-
-
             var configuration = new ARWorldTrackingConfiguration
             {
                 PlaneDetection = ARPlaneDetection.Horizontal,
                 LightEstimationEnabled = true,
 
-                    
+
             };
             configuration.PlaneDetection = ARPlaneDetection.Horizontal;
-            sceneView.Scene = SCNScene.FromFile("art.scnassets/ship");
-            var ship = sceneView.Scene.RootNode.FindChildNode("ship", true);
-            ship.Position = new SCNVector3(0f, -2f, -9f);
-            ship.Scale = new SCNVector3(1f, 1f, 1f);
-           
+            //sceneView.Scene = SCNScene.FromFile("art.scnassets/ship");
+            //var ship = sceneView.Scene.RootNode.FindChildNode("ship", true);
+            //ship.Position = new SCNVector3(0f, -2f, -9f);
+            //ship.Scale = new SCNVector3(1f, 1f, 1f);
 
-            sceneView.Session.Run(configuration, ARSessionRunOptions.ResetTracking |
-            ARSessionRunOptions.RemoveExistingAnchors);
 
-         
+            //sceneView.Session.Run(configuration, ARSessionRunOptions.ResetTracking |
+            //ARSessionRunOptions.RemoveExistingAnchors);
+
+
             var scnView = (SCNView)View;
 
-            scnView.Scene = SCNScene.FromFile("art.scnassets/ship");
+            scnView.Scene = SCNScene.FromFile("art.scnassets/cube");
+
+
+            var ship = scnView.Scene.RootNode.FindChildNode("Cube", true);
+            ship.Position = new SCNVector3(0f, 0f,0f);
+            ship.Scale = new SCNVector3(1f, 1f, 1f);
+
+            // create and add a light to the scene
+            var lightNode = SCNNode.Create();
+            lightNode.Light = SCNLight.Create();
+            lightNode.Light.LightType = SCNLightType.Omni;
+            lightNode.Position = new SCNVector3(0, 10, 10);
+            scnView.Scene.RootNode.AddChildNode(lightNode);
+
+            // create and add an ambient light to the scene
+            var ambientLightNode = SCNNode.Create();
+            ambientLightNode.Light = SCNLight.Create();
+            ambientLightNode.Light.LightType = SCNLightType.Ambient;
+            ambientLightNode.Light.Color = UIColor.DarkGray;
+            scnView.Scene.RootNode.AddChildNode(ambientLightNode);
+         
 
 
             // allows the user to manipulate the camera
@@ -88,8 +84,14 @@ namespace UPJAR
 
             gestureRecognizers.AddRange(scnView.GestureRecognizers);
             scnView.GestureRecognizers = gestureRecognizers.ToArray();
+            base.ViewDidLoad();
 
-          
+        }
+
+    
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
             
         }
         void HandleTap(UIGestureRecognizer gestureRecognize)
@@ -105,33 +107,33 @@ namespace UPJAR
 
             // check that we clicked on at least one object
             Console.WriteLine(hitResults.Length);
-            if (hitResults.Length  > 0)
-            {
-                // retrieved the first clicked object
-                SCNHitTestResult result = hitResults[0];
+            //if (hitResults.Length  > 0)
+            //{
+            //    // retrieved the first clicked object
+            //    SCNHitTestResult result = hitResults[0];
 
-                // get its material
-                SCNMaterial material = result.Node.Geometry.FirstMaterial;
+            //    // get its material
+            //    SCNMaterial material = result.Node.Geometry.FirstMaterial;
 
-                // highlight it
-                SCNTransaction.Begin();
-                SCNTransaction.AnimationDuration = 0.5f;
+            //    // highlight it
+            //    SCNTransaction.Begin();
+            //    SCNTransaction.AnimationDuration = 0.5f;
 
-                // on completion - unhighlight
-                SCNTransaction.SetCompletionBlock(() =>
-                {
-                    SCNTransaction.Begin();
-                    SCNTransaction.AnimationDuration = 0.5f;
+            //    // on completion - unhighlight
+            //    SCNTransaction.SetCompletionBlock(() =>
+            //    {
+            //        SCNTransaction.Begin();
+            //        SCNTransaction.AnimationDuration = 0.5f;
 
 
 
-                    SCNTransaction.Commit();
-                });
+            //        SCNTransaction.Commit();
+            //    });
 
-                material.Emission.Contents = UIColor.Red;
+            //    material.Emission.Contents = UIColor.Red;
 
-                SCNTransaction.Commit();
-            }
+            //    SCNTransaction.Commit();
+            //}
         }
 
 
@@ -145,7 +147,7 @@ namespace UPJAR
         {
             base.ViewDidDisappear(animated);
 
-            sceneView.Session.Pause();
+           
         }
 
     }
