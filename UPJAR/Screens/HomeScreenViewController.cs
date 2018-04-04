@@ -17,9 +17,11 @@ namespace UPJAR
             base.ViewDidLoad();
 
             /// <summary>
-            /// This verifies the existence of a web resource at a specific link.
+            /// This verifies the existence of a web resource at a specific link and then, if exists, downloads source.
+            /// Good doc: https://docs.microsoft.com/en-us/xamarin/ios/app-fundamentals/file-system
+            /// and: https://stackoverflow.com/questions/411592/how-do-i-save-a-stream-to-a-file-in-c?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
             /// </summary>
-            var url = "http://ec2-34-216-11-209.us-west-2.compute.amazonaws.com/ar-web/assets/hi/incognito.jpg";
+            var url = "http://ec2-34-216-11-209.us-west-2.compute.amazonaws.com/ar-web/assets/boi/office.jpeg";
             var documents = Environment.GetFolderPath (Environment.SpecialFolder.MyDocuments);
             Console.WriteLine(documents);
 
@@ -76,6 +78,11 @@ namespace UPJAR
         partial void ArButton_TouchUpInside(UIButton sender)
         {
             Console.WriteLine("go to ar screen");
+        }
+
+        partial void ViewQR_TouchUpInside(UIButton sender)
+        {
+            Console.WriteLine("go to qr screen");
         }
     }
 }

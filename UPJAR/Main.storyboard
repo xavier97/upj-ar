@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4050">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4050">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -10,8 +11,8 @@
             <objects>
                 <viewController id="BV1-FR-VrT" customClass="GameViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="197"/>
-                        <viewControllerLayoutGuide type="bottom" id="198"/>
+                        <viewControllerLayoutGuide type="top" id="4690"/>
+                        <viewControllerLayoutGuide type="bottom" id="4691"/>
                     </layoutGuides>
                     <sceneKitView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
@@ -26,9 +27,10 @@
             </objects>
             <point key="canvasLocation" x="2205" y="1763"/>
         </scene>
+        <!--UPJ AR Home-->
         <scene sceneID="2064">
             <objects>
-                <viewController id="2065" sceneMemberID="viewController" customClass="HomeScreenViewController">
+                <viewController id="2065" customClass="HomeScreenViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2062"/>
                         <viewControllerLayoutGuide type="bottom" id="2063"/>
@@ -36,73 +38,99 @@
                     <view key="view" contentMode="scaleToFill" id="2066">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2266" translatesAutoresizingMaskIntoConstraints="NO">
-                                <rect key="frame" x="52" y="153" width="310" height="185"/>
-                                <connections>
-                                    <action selector="MapButton_TouchUpInside:" destination="2065" id="2463" eventType="touchUpInside"/>
-                                    <segue id="2744" destination="2468" kind="show"/>
-                                </connections>
-                                <color key="backgroundColor" colorSpace="calibratedWhite" white="0.666666666666667" alpha="1"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2266">
+                                <rect key="frame" x="52" y="92" width="310" height="185"/>
+                                <color key="backgroundColor" white="0.66666666666666696" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="310" id="4369"/>
+                                    <constraint firstAttribute="height" constant="185" id="4370"/>
+                                </constraints>
                                 <state key="normal" title="View Map">
-                                    <color key="titleColor" colorSpace="calibratedRGB" red="1" green="0" blue="0" alpha="1"/>
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <real key="value" value="15"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <constraints>
-                                    <constraint id="4369" firstItem="2266" firstAttribute="width" constant="310"/>
-                                    <constraint id="4370" firstItem="2266" firstAttribute="height" constant="185"/>
-                                </constraints>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4376" translatesAutoresizingMaskIntoConstraints="NO">
-                                <rect key="frame" x="52" y="374" width="310" height="185"/>
                                 <connections>
-                                    <action selector="MapButton_TouchUpInside:" destination="4378" id="4377" eventType="touchUpInside"/>
-                                    <segue id="4687" destination="BV1-FR-VrT" kind="show"/>
-                                    <action selector="ArButton_TouchUpInside:" destination="2065" id="4689" eventType="touchUpInside"/>
+                                    <action selector="MapButton_TouchUpInside:" destination="2065" eventType="touchUpInside" id="2463"/>
+                                    <segue destination="2468" kind="show" id="2744"/>
                                 </connections>
-                                <color key="backgroundColor" colorSpace="calibratedWhite" white="0.666666666666667" alpha="1"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4376">
+                                <rect key="frame" x="52" y="300" width="310" height="185"/>
+                                <color key="backgroundColor" white="0.66666666666666696" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="310" id="4393"/>
+                                    <constraint firstAttribute="height" constant="185" id="4394"/>
+                                </constraints>
                                 <state key="normal" title="View AR">
-                                    <color key="titleColor" colorSpace="calibratedRGB" red="1" green="0" blue="0" alpha="1"/>
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <real key="value" value="15"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="ArButton_TouchUpInside:" destination="2065" eventType="touchUpInside" id="4689"/>
+                                    <segue destination="BV1-FR-VrT" kind="show" id="4687"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4940">
+                                <rect key="frame" x="52" y="509" width="310" height="185"/>
+                                <color key="backgroundColor" white="0.66666666666666696" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint id="4393" firstItem="4376" firstAttribute="width" constant="310"/>
-                                    <constraint id="4394" firstItem="4376" firstAttribute="height" constant="185"/>
+                                    <constraint firstAttribute="width" constant="310" id="4945"/>
+                                    <constraint firstAttribute="height" constant="185" id="4946"/>
                                 </constraints>
+                                <state key="normal" title="View QR">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="ArButton_TouchUpInside:" destination="4942" eventType="touchUpInside" id="4941"/>
+                                    <action selector="ViewQR_TouchUpInside:" destination="2065" id="4954" eventType="touchUpInside"/>
+                                    <segue id="5353" destination="5222" kind="show"/>
+                                </connections>
                             </button>
                         </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint id="4368" firstItem="2266" firstAttribute="top" secondItem="2062" secondAttribute="bottom" constant="89"/>
-                            <constraint id="4371" firstItem="2266" firstAttribute="leading" secondItem="2066" secondAttribute="leadingMargin" constant="32"/>
-                            <constraint id="4372" firstItem="2266" firstAttribute="centerX" secondItem="2066" secondAttribute="centerX"/>
-                            <constraint id="4392" firstItem="4376" firstAttribute="top" secondItem="2266" secondAttribute="bottom" constant="36"/>
-                            <constraint id="4395" firstItem="4376" firstAttribute="leading" secondItem="2066" secondAttribute="leadingMargin" constant="32"/>
-                            <constraint id="4396" firstItem="4376" firstAttribute="centerX" secondItem="2066" secondAttribute="centerX"/>
+                            <constraint id="5226" firstItem="2266" firstAttribute="top" secondItem="2062" secondAttribute="bottom" constant="28"/>
+                            <constraint id="5227" firstItem="2266" firstAttribute="leading" secondItem="2066" secondAttribute="leadingMargin" constant="32"/>
+                            <constraint id="5228" firstItem="4376" firstAttribute="top" secondItem="2266" secondAttribute="bottom" constant="23"/>
+                            <constraint id="5229" firstItem="4376" firstAttribute="leading" secondItem="2066" secondAttribute="leadingMargin" constant="32"/>
+                            <constraint id="5230" firstItem="4376" firstAttribute="centerX" secondItem="2066" secondAttribute="centerX"/>
+                            <constraint id="5231" firstItem="2266" firstAttribute="centerX" secondItem="2066" secondAttribute="centerX"/>
+                            <constraint id="5232" firstItem="4940" firstAttribute="top" secondItem="4376" secondAttribute="bottom" constant="24"/>
+                            <constraint id="5233" firstItem="4940" firstAttribute="leading" secondItem="2066" secondAttribute="leadingMargin" constant="32"/>
+                            <constraint id="5234" firstItem="4940" firstAttribute="centerX" secondItem="2066" secondAttribute="centerX"/>
+                            <constraint id="5603" firstItem="2063" firstAttribute="top" secondItem="4940" secondAttribute="bottom" constant="42"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="UPJ AR Home" id="4153"/>
                     <connections>
-                        <outlet property="mapButton" destination="2266" id="name-outlet-2266"/>
                         <outlet property="HomeScreen" destination="2066" id="name-outlet-2066"/>
                         <outlet property="arButton" destination="4376" id="name-outlet-4376"/>
+                        <outlet property="mapButton" destination="2266" id="name-outlet-2266"/>
+                        <outlet property="ViewQR" destination="4940" id="name-outlet-4940"/>
                     </connections>
-                    <navigationItem title="UPJ AR Home" id="4153" key="navigationItem"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2067" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1475" y="801"/>
         </scene>
+        <!--Map View Controller-->
         <scene sceneID="2467">
             <objects>
-                <viewController id="2468" sceneMemberID="viewController" customClass="MapViewController">
+                <viewController id="2468" customClass="MapViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2465"/>
                         <viewControllerLayoutGuide type="bottom" id="2466"/>
@@ -120,6 +148,7 @@
             </objects>
             <point key="canvasLocation" x="2196" y="802"/>
         </scene>
+        <!--Navigation Controller-->
         <scene sceneID="4049">
             <objects>
                 <navigationController id="4050" sceneMemberID="viewController">
@@ -128,12 +157,32 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue id="4154" destination="2065" kind="relationship" relationship="rootViewController"/>
+                        <segue destination="2065" kind="relationship" relationship="rootViewController" id="4154"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4053" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="930" y="803"/>
+        </scene>
+        <scene sceneID="5221">
+            <objects>
+                <viewController id="5222" sceneMemberID="viewController" customClass="QRViewController" title="QR Screen">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5219"/>
+                        <viewControllerLayoutGuide type="bottom" id="5220"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5223">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="QRScreen" destination="5223" id="name-outlet-5223"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5224" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1498" y="1769"/>
         </scene>
     </scenes>
 </document>

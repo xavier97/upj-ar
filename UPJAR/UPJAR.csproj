@@ -27,7 +27,7 @@
     <MtouchArch>x86_64</MtouchArch>
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
     <PlatformTarget>x86</PlatformTarget>
-    <CodesignProvision>iOS Team Provisioning Profile: UPJAR.com-companyname-UPJ-AR</CodesignProvision>
+    <CodesignProvision>iOS Team Provisioning Profile: com.acme.UPJ-AR</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>pdbonly</DebugType>
@@ -125,6 +125,10 @@
     </Compile>
     <Compile Include="Screens\GameViewController.cs">
         <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QRViewController.cs" />
+    <Compile Include="QRViewController.designer.cs">
+      <DependentUpon>QRViewController.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

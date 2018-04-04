@@ -26,6 +26,10 @@ namespace UPJAR
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton mapButton { get; set; }
 
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton ViewQR { get; set; }
+
         [Action ("ArButton_TouchUpInside:")]
         [GeneratedCode ("iOS Designer", "1.0")]
         partial void ArButton_TouchUpInside (UIKit.UIButton sender);
@@ -33,6 +37,10 @@ namespace UPJAR
         [Action ("MapButton_TouchUpInside:")]
         [GeneratedCode ("iOS Designer", "1.0")]
         partial void MapButton_TouchUpInside (UIKit.UIButton sender);
+
+        [Action ("ViewQR_TouchUpInside:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void ViewQR_TouchUpInside (UIKit.UIButton sender);
 
         void ReleaseDesignerOutlets ()
         {
@@ -49,6 +57,11 @@ namespace UPJAR
             if (mapButton != null) {
                 mapButton.Dispose ();
                 mapButton = null;
+            }
+
+            if (ViewQR != null) {
+                ViewQR.Dispose ();
+                ViewQR = null;
             }
         }
     }
