@@ -19,11 +19,10 @@ namespace UPJAR
             var scanner = new ZXing.Mobile.MobileBarcodeScanner();
 
             var result = await scanner.Scan();
-
+            Console.WriteLine("hello");
             if (result != null)
                 Console.WriteLine("REEEe");
-                Console.WriteLine("Scanned Barcode: " + result);
-            
+
         }
     }
 }
