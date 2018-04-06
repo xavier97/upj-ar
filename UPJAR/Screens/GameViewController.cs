@@ -10,20 +10,20 @@ namespace UPJAR
     public partial class GameViewController : UIViewController
     {
         private ARSCNView sceneView;
-        protected GameViewController(IntPtr handle) : base(handle) { }
-
-
-
-        public override void DidReceiveMemoryWarning()
-        {
-            base.DidReceiveMemoryWarning();
-            // Release any cached data, images, etc that aren't in use.
+        protected GameViewController(IntPtr handle) : base(handle) { 
+            
         }
 
-        public override void ViewDidLoad()
-        {
-            base.ViewDidLoad();
 
+        public async void RefreshDataAsync()
+        {
+            Console.WriteLine("hello");
+            var scanner = new ZXing.Mobile.MobileBarcodeScanner();
+
+            var result = await scanner.Scan();
+            Console.WriteLine("hello");
+            if (result != null)
+                Console.WriteLine("REEEe");
             sceneView = new ARSCNView
             {
                 Frame = View.Frame,
@@ -33,12 +33,6 @@ namespace UPJAR
             };
 
             View.AddSubview(sceneView);
-        }
-
-
-        public override void ViewWillAppear(bool animated)
-        {
-            base.ViewWillAppear(animated);
 
             var configuration = new ARWorldTrackingConfiguration
             {
@@ -84,6 +78,28 @@ namespace UPJAR
      
 
         }
+        public override void DidReceiveMemoryWarning()
+        {
+            base.DidReceiveMemoryWarning();
+            // Release any cached data, images, etc that aren't in use.
+        }
+
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
+            RefreshDataAsync();
+
+
+        }
+
+
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+
+           
+
+        }
         void HandleTap(UIGestureRecognizer gestureRecognize)
         {
             Console.WriteLine("touch");
@@ -127,12 +143,7 @@ namespace UPJAR
         }
 
 
-        public override void ViewDidDisappear(bool animated)
-        {
-            base.ViewDidDisappear(animated);
 
-            sceneView.Session.Pause();
-        }
 
     }
 }
