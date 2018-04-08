@@ -14,8 +14,16 @@ namespace UPJARProject
     [Register ("ARViewController")]
     partial class ARViewController
     {
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        ARKit.ARSCNView arScene { get; set; }
+
         void ReleaseDesignerOutlets ()
         {
+            if (arScene != null) {
+                arScene.Dispose ();
+                arScene = null;
+            }
         }
     }
 }
