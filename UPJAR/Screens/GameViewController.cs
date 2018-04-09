@@ -10,22 +10,36 @@ namespace UPJAR
     public partial class GameViewController : UIViewController
     {
         private ARSCNView sceneView;
+       
         protected GameViewController(IntPtr handle) : base(handle) { 
             
         }
 
         private SCNMaterial[] LoadMaterials()
         {
-
+           
             var a = new SCNMaterial();
             var b = new SCNMaterial();
 
             a.Diffuse.Contents = UIImage.FromFile("art.scnassets/texture.png");
             b.Diffuse.Contents = UIColor.Green;
 
-            SCNMaterial[] joe = new SCNMaterial[] {b,a,a,a,b,a };
+            SCNMaterial[] joe = new SCNMaterial[] {b,b,b,b,b,b };
             // This demo was originally in F# :-)   
             return joe;
+        }
+        private SCNMaterial[] LoadMaterials2()
+        {
+
+            var z = new SCNMaterial();
+            var y = new SCNMaterial();
+
+            z.Diffuse.Contents = UIImage.FromFile("art.scnassets/texture.png");
+            y.Diffuse.Contents = UIColor.Red;
+
+            SCNMaterial[] red = new SCNMaterial[] { y, y, y, y, y, y };
+            // This demo was originally in F# :-)   
+            return red;
         }
         public async void RefreshDataAsync()
         {
@@ -44,7 +58,11 @@ namespace UPJAR
                 UserInteractionEnabled = true
             };
 
-            View.AddSubview(sceneView);
+          
+
+
+           View.AddSubview(sceneView);
+          
 
             var configuration = new ARWorldTrackingConfiguration
             {
@@ -54,8 +72,7 @@ namespace UPJAR
            
             configuration.PlaneDetection = ARPlaneDetection.Horizontal;
             sceneView.Scene = SCNScene.FromFile("art.scnassets/cube");
-
-
+         
             var material = new SCNMaterial();
 
             material.Diffuse.Contents = UIImage.FromFile("art.scnassets/texture.png");
@@ -63,10 +80,9 @@ namespace UPJAR
 
             material.LocksAmbientWithDiffuse = true;
 
-            
-
 
             var ship = sceneView.Scene.RootNode.FindChildNode("Cube", true);
+           
 
             ship.Geometry = new SCNBox
             {
@@ -77,23 +93,44 @@ namespace UPJAR
 
             };
 
-            ship.Geometry.Materials = LoadMaterials();
-            ship.Geometry.FirstMaterial.Diffuse.Contents = UIColor.Green;
-
-
-            ship.Position = new SCNVector3(2f, -2f, -3f);
-            ship.Scale = new SCNVector3(.5f, .5f, .5f);
-
            
+            ship.Geometry.Materials = LoadMaterials();
 
 
-            sceneView.Session.Run(configuration, ARSessionRunOptions.ResetTracking |
+            ship.Position = new SCNVector3(1f, 0f, 2f);
+            ship.Scale = new SCNVector3(.4f, .4f, .4f);
+
+
+            var ship2 = ship.Clone();
+
+             ship2.Geometry = new SCNBox
+            {
+                Width = 1,
+                Height = 1,
+                Length = 1,
+
+
+            };
+            ship2.Geometry.Materials = LoadMaterials2();
+          
+
+            ship2.Position = new SCNVector3(-1f, 0f, 2f);
+            ship2.Scale = new SCNVector3(.4f, .4f, .4f);
+
+            sceneView.Scene.RootNode.Add(ship2);
+
+
+            sceneView.Session.Run(configuration,ARSessionRunOptions.ResetTracking|
               ARSessionRunOptions.RemoveExistingAnchors);
+
+        
+
+        
 
 
         
             // allows the user to manipulate the camera
-            //ship
+           
 
             // show statistics such as fps and timing information
             sceneView.ShowsStatistics = true;
