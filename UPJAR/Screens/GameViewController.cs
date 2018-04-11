@@ -10,11 +10,37 @@ namespace UPJAR
     public partial class GameViewController : UIViewController
     {
         private ARSCNView sceneView;
+       
         protected GameViewController(IntPtr handle) : base(handle) { 
             
         }
 
+        private SCNMaterial[] LoadMaterials()
+        {
+           
+            var a = new SCNMaterial();
+            var b = new SCNMaterial();
 
+            a.Diffuse.Contents = UIImage.FromFile("art.scnassets/texture.png");
+            b.Diffuse.Contents = UIColor.Green;
+
+            SCNMaterial[] joe = new SCNMaterial[] {b,b,b,b,b,b };
+            // This demo was originally in F# :-)   
+            return joe;
+        }
+        private SCNMaterial[] LoadMaterials2()
+        {
+
+            var z = new SCNMaterial();
+            var y = new SCNMaterial();
+
+            z.Diffuse.Contents = UIImage.FromFile("art.scnassets/texture.png");
+            y.Diffuse.Contents = UIColor.Red;
+
+            SCNMaterial[] red = new SCNMaterial[] { y, y, y, y, y, y };
+            // This demo was originally in F# :-)   
+            return red;
+        }
         public async void RefreshDataAsync()
         {
             Console.WriteLine("hello");
@@ -32,7 +58,11 @@ namespace UPJAR
                 UserInteractionEnabled = true
             };
 
-            View.AddSubview(sceneView);
+          
+
+
+           View.AddSubview(sceneView);
+          
 
             var configuration = new ARWorldTrackingConfiguration
             {
@@ -42,40 +72,75 @@ namespace UPJAR
            
             configuration.PlaneDetection = ARPlaneDetection.Horizontal;
             sceneView.Scene = SCNScene.FromFile("art.scnassets/cube");
-            var ship = sceneView.Scene.RootNode.FindChildNode("Cube", true);
-            ship.Position = new SCNVector3(0f, 1f, 3f);
-            ship.Scale = new SCNVector3(.5f, .5f, .5f);
+         
+            var material = new SCNMaterial();
 
-            sceneView.Session.Run(configuration, ARSessionRunOptions.ResetTracking |
+            material.Diffuse.Contents = UIImage.FromFile("art.scnassets/texture.png");
+
+
+            material.LocksAmbientWithDiffuse = true;
+
+
+            var ship = sceneView.Scene.RootNode.FindChildNode("Cube", true);
+           
+
+            ship.Geometry = new SCNBox
+            {
+                Width = 1,
+                Height = 1,
+                Length = 1,
+         
+
+            };
+
+           
+            ship.Geometry.Materials = LoadMaterials();
+
+
+            ship.Position = new SCNVector3(1f, 0f, 2f);
+            ship.Scale = new SCNVector3(.4f, .4f, .4f);
+
+
+            var ship2 = ship.Clone();
+
+             ship2.Geometry = new SCNBox
+            {
+                Width = 1,
+                Height = 1,
+                Length = 1,
+
+
+            };
+            ship2.Geometry.Materials = LoadMaterials2();
+          
+
+            ship2.Position = new SCNVector3(-1f, 0f, 2f);
+            ship2.Scale = new SCNVector3(.4f, .4f, .4f);
+
+            sceneView.Scene.RootNode.Add(ship2);
+
+
+            sceneView.Session.Run(configuration,ARSessionRunOptions.ResetTracking|
               ARSessionRunOptions.RemoveExistingAnchors);
+
+        
+
+        
 
 
         
             // allows the user to manipulate the camera
-            //ship
+           
 
             // show statistics such as fps and timing information
             sceneView.ShowsStatistics = true;
 
-            // add a tap gesture recognizer
-            var tapGesture = new UITapGestureRecognizer(HandleTap);
-
-
-            var gestureRecognizers = new List<UIGestureRecognizer>();
 
 
 
 
-            gestureRecognizers.Add(tapGesture);
 
-
-            gestureRecognizers.AddRange(sceneView.GestureRecognizers);
-            sceneView.GestureRecognizers = gestureRecognizers.ToArray();
-
-          
-            
-
-     
+   
 
         }
         public override void DidReceiveMemoryWarning()
@@ -89,6 +154,8 @@ namespace UPJAR
             base.ViewDidLoad();
             RefreshDataAsync();
 
+           
+
 
         }
 
@@ -100,47 +167,7 @@ namespace UPJAR
            
 
         }
-        void HandleTap(UIGestureRecognizer gestureRecognize)
-        {
-            Console.WriteLine("touch");
-            // retrieve the SCNView
-          
 
-
-            // check what nodes are tapped
-            CGPoint p = gestureRecognize.LocationInView(sceneView);
-            SCNHitTestResult[] hitResults = sceneView.HitTest(p, (SCNHitTestOptions)null);
-
-            // check that we clicked on at least one object
-            Console.WriteLine(hitResults.Length);
-            if (hitResults.Length > 0)
-            {
-                // retrieved the first clicked object
-                SCNHitTestResult result = hitResults[0];
-
-                // get its material
-                SCNMaterial material = result.Node.Geometry.FirstMaterial;
-
-                // highlight it
-                SCNTransaction.Begin();
-                SCNTransaction.AnimationDuration = 0.5f;
-
-                // on completion - unhighlight
-                SCNTransaction.SetCompletionBlock(() =>
-                {
-                    SCNTransaction.Begin();
-                    SCNTransaction.AnimationDuration = 0.5f;
-
-
-
-                    SCNTransaction.Commit();
-                });
-
-                material.Emission.Contents = UIColor.Red;
-
-                SCNTransaction.Commit();
-            }
-        }
 
 
 
