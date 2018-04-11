@@ -83,6 +83,18 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
+    <Reference Include="ZXing.Net.Mobile.Core">
+      <HintPath>..\packages\ZXing.Net.Mobile.2.4.1\lib\Xamarin.iOS10\ZXing.Net.Mobile.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.portable">
+      <HintPath>..\packages\ZXing.Net.Mobile.2.4.1\lib\Xamarin.iOS10\zxing.portable.dll</HintPath>
+    </Reference>
+    <Reference Include="ZXingNetMobile">
+      <HintPath>..\packages\ZXing.Net.Mobile.2.4.1\lib\Xamarin.iOS10\ZXingNetMobile.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
@@ -104,6 +116,7 @@
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -130,6 +143,8 @@
     <Compile Include="QRViewController.designer.cs">
       <DependentUpon>QRViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="FileManager.cs" />
+    <Compile Include="JsonResultClass.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
