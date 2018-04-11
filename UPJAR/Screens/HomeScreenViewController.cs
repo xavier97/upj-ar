@@ -1,8 +1,10 @@
 using Foundation;
 using System;
+using Newtonsoft.Json;
 using System.IO;
 using System.Net;
 using UIKit;
+using System.Collections.Generic;
 
 namespace UPJAR
 {
@@ -12,63 +14,35 @@ namespace UPJAR
         {
         }
 
-		public override void ViewDidLoad()
-		{
+        public override void ViewDidLoad()
+        {
             base.ViewDidLoad();
 
-            /// <summary>
-            /// This verifies the existence of a web resource at a specific link and then, if exists, downloads source.
-            /// Good doc: https://docs.microsoft.com/en-us/xamarin/ios/app-fundamentals/file-system
-            /// and: https://stackoverflow.com/questions/411592/how-do-i-save-a-stream-to-a-file-in-c?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
-            /// </summary>
-            var url = "http://ec2-34-216-11-209.us-west-2.compute.amazonaws.com/ar-web/assets/boi/office.jpeg";
-            var documents = Environment.GetFolderPath (Environment.SpecialFolder.MyDocuments);
-            Console.WriteLine(documents);
+            // Check/Pull all new stuff from service once per app load
+            #region Get webservice data
+            // Create list of json objects
+            List<JsonResultClass> assetList = new List<JsonResultClass>();
 
-            try
+            using (var client = new WebClient()) // Get json from the web
             {
-                // Creates an HttpWebRequest for the specified URL. 
-                HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-                HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
-                string method;
-                method = myHttpWebResponse.Method;
+                var json = client.DownloadString("http://ec2-34-216-11-209.us-west-2.compute.amazonaws.com/ar-web/results.json"); // web service location
+                assetList = JsonConvert.DeserializeObject<List<JsonResultClass>>(json); // Get the web json into memory as a list
 
-                if (String.Compare(method, "GET") == 0)
-                {
-                    Console.WriteLine("\nThe 'GET' method was successfully invoked on the following Web Server : {0}",
-                                      myHttpWebResponse.Server);
-
-                    // Download data:
-                    // Get the stream containing content returned by the server.  
-                    Stream dataStream = myHttpWebResponse.GetResponseStream();
-
-                    // Gets a location to store file
-                    var filename = Path.Combine(documents, "incognito.jpg");
-
-                    // Gets the stream containing the file for the app.
-                    Stream fileStream = File.Create(filename);
-
-                    // Copy web stream to file stream
-                    dataStream.CopyTo(fileStream);
-
-                    // Close streams
-                    fileStream.Close();
-                    dataStream.Close();
-                }
-
-                // Releases the resources of the response.
-                myHttpWebResponse.Close();
-            }
-            catch (WebException e)
-            {
-                Console.WriteLine("\nWebException raised. The following error occured : {0}", e.Status);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("\nThe following Exception was raised : {0}", e.Message);
+                // Do something with the model
+                Console.WriteLine(assetList[0].description); // TODO: should print "This is a test database entry" :)
             }
 
-		}
+            FileManager fileManager = new FileManager(); // Get ready to manage file
+
+            // Start loading everything from webservice into app
+            // TODO: This should work once real URL is used.
+            for (int member = 0; member < assetList.Count; member++)
+            {
+                fileManager.downloadFile(assetList[member].assetLocation, assetList[member].name);
+            }
+            #endregion
+
+        }
 
 		partial void MapButton_TouchUpInside(UIButton sender)
         {
