@@ -10,6 +10,7 @@ namespace UPJAR
     public partial class GameViewController : UIViewController
     {
         private ARSCNView sceneView;
+        private string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
        
         protected GameViewController(IntPtr handle) : base(handle) { 
             
@@ -21,7 +22,7 @@ namespace UPJAR
             var a = new SCNMaterial();
             var b = new SCNMaterial();
 
-            a.Diffuse.Contents = UIImage.FromFile("art.scnassets/texture.png");
+            a.Diffuse.Contents = UIImage.FromFile(path + "/texture.png");
             b.Diffuse.Contents = UIColor.Green;
 
             SCNMaterial[] joe = new SCNMaterial[] {b,b,b,b,b,b };
@@ -34,7 +35,7 @@ namespace UPJAR
             var z = new SCNMaterial();
             var y = new SCNMaterial();
 
-            z.Diffuse.Contents = UIImage.FromFile("art.scnassets/texture.png");
+            z.Diffuse.Contents = UIImage.FromFile(path + "/texture.png");
             y.Diffuse.Contents = UIColor.Red;
 
             SCNMaterial[] red = new SCNMaterial[] { y, y, y, y, y, y };
@@ -71,11 +72,11 @@ namespace UPJAR
             };
            
             configuration.PlaneDetection = ARPlaneDetection.Horizontal;
-            sceneView.Scene = SCNScene.FromFile("art.scnassets/cube");
+            sceneView.Scene = SCNScene.FromFile(path + "/cube");
          
             var material = new SCNMaterial();
 
-            material.Diffuse.Contents = UIImage.FromFile("art.scnassets/texture.png");
+            material.Diffuse.Contents = UIImage.FromFile(path + "/texture.png");
 
 
             material.LocksAmbientWithDiffuse = true;

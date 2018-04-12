@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\UPJARTests\packages\NUnit.3.10.1\build\NUnit.props" Condition="Exists('..\..\UPJARTests\packages\NUnit.3.10.1\build\NUnit.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
@@ -64,7 +65,7 @@
     <DefineConstants>DEBUG;ENABLE_TEST_CLOUD;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: nejixavier@yahoo.com (5PB9AZDDKA)</CodesignKey>
     <DeviceSpecificBuild>true</DeviceSpecificBuild>
     <MtouchDebug>true</MtouchDebug>
     <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
@@ -105,13 +106,9 @@
     <InterfaceDefinition Include="Main.storyboard" />
   </ItemGroup>
   <ItemGroup>
-    <SceneKitAsset Include="art.scnassets\ship.dae" />
-    <SceneKitAsset Include="art.scnassets\texture.png" />
-    <SceneKitAsset Include="art.scnassets\cube.dae" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="Screens\" />
+    <Folder Include="File Management\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -143,8 +140,11 @@
     <Compile Include="QRViewController.designer.cs">
       <DependentUpon>QRViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="FileManager.cs" />
-    <Compile Include="JsonResultClass.cs" />
+    <Compile Include="File Management\FileManager.cs" />
+    <Compile Include="File Management\CubeDetail.cs" />
+    <Compile Include="File Management\Reachability.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <Import Project="..\..\UPJARTests\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\..\UPJARTests\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets')" />
+  <Import Project="..\..\UPJAR.Tests\packages\NETStandard.Library.2.0.2\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\..\UPJAR.Tests\packages\NETStandard.Library.2.0.2\build\netstandard2.0\NETStandard.Library.targets')" />
 </Project>
