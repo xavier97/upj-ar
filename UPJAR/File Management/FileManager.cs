@@ -86,6 +86,15 @@ namespace UPJAR
                     DownloadFile(assetList[member].assetLocation, assetList[member].img1);
                     DownloadFile(assetList[member].assetLocation, assetList[member].img2);
                     DownloadFile(assetList[member].assetLocation, assetList[member].img3);
+                    DownloadFile(assetList[member].assetLocation, assetList[member].img4);
+                    DownloadFile(assetList[member].assetLocation, assetList[member].img5);
+                    DownloadFile(assetList[member].assetLocation, assetList[member].img6);
+                    DownloadFile(assetList[member].assetLocation, assetList[member].img7);
+                    DownloadFile(assetList[member].assetLocation, assetList[member].img8);
+                    DownloadFile(assetList[member].assetLocation, assetList[member].img9);
+                    DownloadFile(assetList[member].assetLocation, assetList[member].img10);
+                    DownloadFile(assetList[member].assetLocation, assetList[member].img11);
+                    DownloadFile(assetList[member].assetLocation, assetList[member].img12);
                 }
 
             }
