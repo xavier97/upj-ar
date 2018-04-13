@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using ARKit;
 using CoreGraphics;
 using SceneKit;
@@ -12,8 +13,9 @@ namespace UPJAR
         private ARSCNView sceneView;
         private string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
        
-        protected GameViewController(IntPtr handle) : base(handle) { 
-            
+        protected GameViewController(IntPtr handle) : base(handle)
+        {
+            Console.WriteLine(path);
         }
 
         private SCNMaterial[] LoadMaterials()
@@ -21,14 +23,25 @@ namespace UPJAR
            
             var a = new SCNMaterial();
             var b = new SCNMaterial();
+            var c = new SCNMaterial();
+            var d = new SCNMaterial();
 
-            a.Diffuse.Contents = UIImage.FromFile(path + "/texture.png");
-            b.Diffuse.Contents = UIColor.Green;
+            // Determine types of texture to use, based on data sent by QR screen
+            int key = assetKey();
+            string textureFolderPath = path + "/asset" + key;
 
-            SCNMaterial[] joe = new SCNMaterial[] {b,b,b,b,b,b };
+            string[] Files = Directory.GetFiles(textureFolderPath, "*.png"); // Getting Text files
+
+            a.Diffuse.Contents = UIImage.FromFile(path + "/" + Files[0]);
+            b.Diffuse.Contents = UIImage.FromFile(path + "/" + Files[1]);
+            c.Diffuse.Contents = UIImage.FromFile(path + "/" + Files[2]);
+            d.Diffuse.Contents = UIImage.FromFile(path + "/" + Files[3]);
+
+            SCNMaterial[] joe = new SCNMaterial[] {a,a,a,a,a,a };
             // This demo was originally in F# :-)   
             return joe;
         }
+
         private SCNMaterial[] LoadMaterials2()
         {
 
@@ -72,11 +85,20 @@ namespace UPJAR
             };
            
             configuration.PlaneDetection = ARPlaneDetection.Horizontal;
-            sceneView.Scene = SCNScene.FromFile(path + "/cube");
+            sceneView.Scene = SCNScene.FromFile("art.scnassets/cube");
          
             var material = new SCNMaterial();
 
-            material.Diffuse.Contents = UIImage.FromFile(path + "/texture.png");
+            // Determine types of texture to use, based on data sent by QR screen
+            int key = assetKey();
+            string textureFolderPath = path + "/asset" + key;
+
+            string[] Files = Directory.GetFiles(textureFolderPath, "*.png"); // Getting Text files
+
+            for (int assetCount = 0; assetCount < Files.Length; assetCount++)
+            {
+                material.Diffuse.Contents = UIImage.FromFile(path + "/" + Files[assetCount]);
+            }
 
 
             material.LocksAmbientWithDiffuse = true;
@@ -169,8 +191,15 @@ namespace UPJAR
 
         }
 
-
-
+        /// <summary>
+        /// Represents the key that the QR scanner should somehow send to let AR
+        /// know what textures to use.
+        /// </summary>
+        /// <returns>The key.</returns>
+        private int assetKey()
+        {
+            return 1;
+        }
 
 
     }

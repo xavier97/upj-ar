@@ -13,6 +13,15 @@ namespace UPJAR
         public string img1 { get; set; }
         public string img2 { get; set; }
         public string img3 { get; set; }
+        public string img4 { get; set; }
+        public string img5 { get; set; }
+        public string img6 { get; set; }
+        public string img7 { get; set; }
+        public string img8 { get; set; }
+        public string img9 { get; set; }
+        public string img10 { get; set; }
+        public string img11 { get; set; }
+        public string img12 { get; set; }
 
 		public override string ToString()
 		{
