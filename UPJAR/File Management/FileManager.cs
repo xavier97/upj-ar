@@ -20,21 +20,25 @@ namespace UPJAR
         public FileManager()
         {
 
-            Console.WriteLine("Constructor");
+            Console.WriteLine(path);
 
-            if (Reachability.IsHostReachable(webserviceURL)) // IF network is available...
-            {
-                // Checks for any changes from the webservice. If there are changes, import the files.
-                if (isChange()) // Yes.
-                {
-                    MakeAssetList(); // puts location of objects in memory
-                    UpdateAssets(); // puts objects into storage
-                }
-                else // No.
-                {
+            MakeAssetList();
 
-                }
-            }
+            //if (Reachability.IsHostReachable(webserviceURL)) // IF network is available...
+            //{
+                //// Checks for any changes from the webservice. If there are changes (y/n), import the files.
+                //if (isChange()) // Yes.
+                //{
+                //    MakeAssetList(); // puts location of objects in memory
+                //    UpdateAssets(); // puts objects into storage
+                //}
+                //else // No.
+                //{
+                //    // this needs fixed
+                //    MakeAssetList(); // puts location of objects in memory
+                //    UpdateAssets(); 
+                //}
+            //}
         }
 
         /// <summary>
@@ -50,11 +54,11 @@ namespace UPJAR
             }
 
             string onlineJson = WebJsonToString(); // text of web json
-            string cachedJson = LocalJsonToString(); // text of cached json
+            string cachedJson = LocalJsonToString(); // text of cached json (from local .json file)
 
             //TEST STRINGS
-            Console.WriteLine(onlineJson);
-            Console.WriteLine(cachedJson);
+            //Console.WriteLine(onlineJson);
+            //Console.WriteLine(cachedJson);
 
             if (!string.Equals(onlineJson, cachedJson)) // Checks if there is any change to the files. if not the same, then replace cache file
             {
@@ -83,18 +87,18 @@ namespace UPJAR
 
                 for (int count = 0; count < ASSET_COUNT; count++)
                 {
-                    DownloadFile(assetList[member].assetLocation, assetList[member].img1);
-                    DownloadFile(assetList[member].assetLocation, assetList[member].img2);
-                    DownloadFile(assetList[member].assetLocation, assetList[member].img3);
-                    DownloadFile(assetList[member].assetLocation, assetList[member].img4);
-                    DownloadFile(assetList[member].assetLocation, assetList[member].img5);
-                    DownloadFile(assetList[member].assetLocation, assetList[member].img6);
-                    DownloadFile(assetList[member].assetLocation, assetList[member].img7);
-                    DownloadFile(assetList[member].assetLocation, assetList[member].img8);
-                    DownloadFile(assetList[member].assetLocation, assetList[member].img9);
-                    DownloadFile(assetList[member].assetLocation, assetList[member].img10);
-                    DownloadFile(assetList[member].assetLocation, assetList[member].img11);
-                    DownloadFile(assetList[member].assetLocation, assetList[member].img12);
+                    DownloadFile(assetList[member].asset, assetList[member].image1);
+                    DownloadFile(assetList[member].asset, assetList[member].image2);
+                    DownloadFile(assetList[member].asset, assetList[member].image3);
+                    DownloadFile(assetList[member].asset, assetList[member].image4);
+                    DownloadFile(assetList[member].asset, assetList[member].image5);
+                    DownloadFile(assetList[member].asset, assetList[member].image6);
+                    DownloadFile(assetList[member].asset, assetList[member].image7);
+                    DownloadFile(assetList[member].asset, assetList[member].image8);
+                    DownloadFile(assetList[member].asset, assetList[member].image9);
+                    DownloadFile(assetList[member].asset, assetList[member].image10);
+                    DownloadFile(assetList[member].asset, assetList[member].image11);
+                    DownloadFile(assetList[member].asset, assetList[member].image12);
                 }
 
             }
@@ -174,7 +178,17 @@ namespace UPJAR
 
         private string LocalJsonToString()
         {
-            return File.ReadAllText(jsonPath);
+            try
+            {
+                return File.ReadAllText(jsonPath);
+            }
+            catch (FileNotFoundException fnfe) // this literally should not happen irl
+            {
+                Console.WriteLine("\nThe following Exception was raised : {0}. " +
+                                  "(Make sure that a json file was actually cached from the web!)", fnfe.Message);
+                return null;
+            }
+
         }
 
         /// <summary>
@@ -183,7 +197,7 @@ namespace UPJAR
         private void CacheJsonText()
         {
             var json = WebJsonToString();
-            File.WriteAllText(jsonPath, json);
+            File.WriteAllText(jsonPath.TrimEnd(new char[] { '\r', '\n' }), json);
         }
 
         /// <summary>
@@ -191,6 +205,8 @@ namespace UPJAR
         /// </summary>
         private void MakeAssetList()
         {
+            Console.WriteLine("you are here");
+
             if (assetList == null)
             {
                 assetList = new List<CubeDetail>();
@@ -199,6 +215,9 @@ namespace UPJAR
             string json = LocalJsonToString(); // Gets json that's local
 
             assetList = JsonConvert.DeserializeObject<List<CubeDetail>>(json); // Populate list with JSON objects
+
+            Console.WriteLine(assetList[0].ToString()); // TEST
+
         }
 
         #endregion

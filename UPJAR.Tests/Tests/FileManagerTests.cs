@@ -9,6 +9,15 @@ namespace UPJAR.Tests
     public class FileManagerTests
     {
         [Test]
+        public void VerifyList()
+        {
+            FileManager fileManager = new FileManager();
+
+            //Assert.True(fileManager)
+        }
+
+        #region Default Tests...
+        [Test]
         public void Pass()
         {
             Assert.True(true);
@@ -26,5 +35,6 @@ namespace UPJAR.Tests
         {
             Assert.True(false);
         }
+        #endregion
     }
 }
