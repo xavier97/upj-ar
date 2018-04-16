@@ -14,31 +14,31 @@ namespace UPJAR
         private string webserviceURL = "http://ec2-34-216-11-209.us-west-2.compute.amazonaws.com/ar-web/results.json"; // Webservice location
         private string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         private string jsonPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/assets.json";
-
+        private string newDirectory;
         private List<CubeDetail> assetList; // List of cube's assets
-
+        private string name1;
         public FileManager()
         {
 
             Console.WriteLine(path);
 
-            MakeAssetList();
+           
 
-            //if (Reachability.IsHostReachable(webserviceURL)) // IF network is available...
-            //{
-                //// Checks for any changes from the webservice. If there are changes (y/n), import the files.
-                //if (isChange()) // Yes.
-                //{
-                //    MakeAssetList(); // puts location of objects in memory
-                //    UpdateAssets(); // puts objects into storage
-                //}
-                //else // No.
-                //{
-                //    // this needs fixed
-                //    MakeAssetList(); // puts location of objects in memory
-                //    UpdateAssets(); 
-                //}
-            //}
+            if (Reachability.IsHostReachable(webserviceURL)) // IF network is available...
+            {
+                // Checks for any changes from the webservice. If there are changes (y/n), import the files.
+                if (isChange()) // Yes.
+                {
+                    MakeAssetList(); // puts location of objects in memory
+                    UpdateAssets(); // puts objects into storage
+                }
+                else // No.
+                {
+                    // this needs fixed
+                    MakeAssetList(); // puts location of objects in memory
+                    UpdateAssets(); 
+                }
+            }
         }
 
         /// <summary>
@@ -78,27 +78,28 @@ namespace UPJAR
         {
             const int ASSET_COUNT = 11; // number of assets that make up the cube/ar tour scene
 
-            for (int member = 0; member < assetList.Count; member++)
+            for (int member = 1; member < assetList.Count; member++)
             {
                 
                 // make a new directory to organize assets
-                string newDirectory = path + "/asset" + member.ToString();
-                Directory.CreateDirectory(newDirectory);
+                newDirectory = path + "/asset" + member.ToString();
+                 Directory.CreateDirectory(newDirectory);
 
                 for (int count = 0; count < ASSET_COUNT; count++)
                 {
-                    DownloadFile(assetList[member].asset, assetList[member].image1);
-                    DownloadFile(assetList[member].asset, assetList[member].image2);
-                    DownloadFile(assetList[member].asset, assetList[member].image3);
-                    DownloadFile(assetList[member].asset, assetList[member].image4);
-                    DownloadFile(assetList[member].asset, assetList[member].image5);
-                    DownloadFile(assetList[member].asset, assetList[member].image6);
-                    DownloadFile(assetList[member].asset, assetList[member].image7);
-                    DownloadFile(assetList[member].asset, assetList[member].image8);
-                    DownloadFile(assetList[member].asset, assetList[member].image9);
-                    DownloadFile(assetList[member].asset, assetList[member].image10);
-                    DownloadFile(assetList[member].asset, assetList[member].image11);
-                    DownloadFile(assetList[member].asset, assetList[member].image12);
+                    Console.WriteLine("FAGGGG");
+                    DownloadFile(assetList[member].asset, "cubeImage0.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, "cubeImage1.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, "cubeImage2.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, "cubeImage3.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, "cubeImage4.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, "cubeImage5.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, "cubeImage6.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, "cubeImage7.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, "cubeImage8.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, "cubeImage9.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, "cubeImage10.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, "cubeImage11.jpg", newDirectory);
                 }
 
             }
@@ -112,18 +113,29 @@ namespace UPJAR
         /// </summary>
         /// <param name="url">url to json service</param>
         /// <param name="name">name of asset</param>
-        private void DownloadFile(string url, string name)
+        private void  DownloadFile(string url, string name, string location)
         {
-            
-            Console.WriteLine(url); // i want a real url
 
-            try
+            // i want a real url
+
+        
+            string replace = "/var/www/html/ar-web/assets/";
+            url = url.Replace(replace, "");
+            HttpWebRequest myHttpWebRequest;
+            HttpWebResponse myHttpWebResponse ;
+         try
             {
                 // Creates an HttpWebRequest for the specified URL. 
-                HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-                HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
+                Console.WriteLine(name);
+
+                name1 = name;
+                myHttpWebRequest  = (HttpWebRequest)WebRequest.Create("http://ec2-34-216-11-209.us-west-2.compute.amazonaws.com/ar-web/assets/" + url + name);
+                myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
+
+                Console.WriteLine("REEEEEe");
                 string method;
                 method = myHttpWebResponse.Method;
+
 
                 if (String.Compare(method, "GET") == 0) // IF GET METHOD SUCCESSFULLY INVKED ON SERVER, then download data
                 {
@@ -135,7 +147,11 @@ namespace UPJAR
                     Stream dataStream = myHttpWebResponse.GetResponseStream();
 
                     // Gets a location to store file
-                    var newFileName = Path.Combine(path, name);
+                    Console.WriteLine(path);
+                    Console.WriteLine("CHUCK NORIS SUCKS PEN");
+                    Console.WriteLine(name1);
+                    var newFileName = Path.Combine(location);
+                 
 
                     // Gets the stream containing the file for the app.
                     Stream fileStream = File.Create(newFileName);
@@ -154,12 +170,14 @@ namespace UPJAR
             catch (WebException e)
             {
                 Console.WriteLine("\nWebException raised. The following error occured : {0}", e.Status);
+               
             }
             catch (Exception e)
             {
                 Console.WriteLine("\nThe following Exception was raised : {0}", e.Message);
+               
             }
-
+           
         }
 
         #region helpers
@@ -216,7 +234,7 @@ namespace UPJAR
 
             assetList = JsonConvert.DeserializeObject<List<CubeDetail>>(json); // Populate list with JSON objects
 
-            Console.WriteLine(assetList[0].ToString()); // TEST
+            Console.WriteLine(assetList[6].ToString()); // TEST
 
         }
 
