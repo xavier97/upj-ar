@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace UPJAR
 {
     public class FileManager
     {
-        private string webserviceURL = "http://ec2-34-216-11-209.us-west-2.compute.amazonaws.com/ar-web/results.json"; // Webservice location
+        private string webserviceURL = "http://ec2-54-191-254-89.us-west-2.compute.amazonaws.com/ar-web/results.json"; // Webservice location
         private string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         private string jsonPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/assets.json";
         private string newDirectory;
@@ -29,6 +30,7 @@ namespace UPJAR
                 // Checks for any changes from the webservice. If there are changes (y/n), import the files.
                 if (isChange()) // Yes.
                 {
+                    // TODO: Load up load screen view 1st
                     MakeAssetList(); // puts location of objects in memory
                     UpdateAssets(); // puts objects into storage
                 }
@@ -36,7 +38,6 @@ namespace UPJAR
                 {
                     // this needs fixed
                     MakeAssetList(); // puts location of objects in memory
-                    UpdateAssets(); 
                 }
             }
         }
@@ -113,7 +114,7 @@ namespace UPJAR
         /// </summary>
         /// <param name="url">url to json service</param>
         /// <param name="name">name of asset</param>
-        private void  DownloadFile(string url, string imagename,string name, string location)
+        private void DownloadFile(string url, string imagename,string name, string location)
         {
 
             // i want a real url
@@ -129,7 +130,8 @@ namespace UPJAR
                 Console.WriteLine(name);
 
                 name1 = name;
-                myHttpWebRequest  = (HttpWebRequest)WebRequest.Create("http://ec2-34-216-11-209.us-west-2.compute.amazonaws.com/ar-web/assets/" + url + name);
+
+                myHttpWebRequest  = (HttpWebRequest)WebRequest.Create("http://ec2-54-191-254-89.us-west-2.compute.amazonaws.com/ar-web/assets/" + url + name);
                 myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
 
                 string method;
