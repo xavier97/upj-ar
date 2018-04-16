@@ -87,7 +87,7 @@ namespace UPJAR
 
                 for (int count = 0; count < ASSET_COUNT; count++)
                 {
-                    Console.WriteLine("FAGGGG");
+
                     DownloadFile(assetList[member].asset, "cubeImage0.jpg", newDirectory);
                     DownloadFile(assetList[member].asset, "cubeImage1.jpg", newDirectory);
                     DownloadFile(assetList[member].asset, "cubeImage2.jpg", newDirectory);
@@ -132,7 +132,6 @@ namespace UPJAR
                 myHttpWebRequest  = (HttpWebRequest)WebRequest.Create("http://ec2-34-216-11-209.us-west-2.compute.amazonaws.com/ar-web/assets/" + url + name);
                 myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
 
-                Console.WriteLine("REEEEEe");
                 string method;
                 method = myHttpWebResponse.Method;
 
@@ -148,7 +147,7 @@ namespace UPJAR
 
                     // Gets a location to store file
                     Console.WriteLine(path);
-                    Console.WriteLine("CHUCK NORIS SUCKS PEN");
+                
                     Console.WriteLine(name1);
                     var newFileName = Path.Combine(location);
                  
