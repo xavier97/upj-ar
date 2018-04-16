@@ -88,18 +88,18 @@ namespace UPJAR
                 for (int count = 0; count < ASSET_COUNT; count++)
                 {
 
-                    DownloadFile(assetList[member].asset, "cubeImage0.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, "cubeImage1.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, "cubeImage2.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, "cubeImage3.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, "cubeImage4.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, "cubeImage5.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, "cubeImage6.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, "cubeImage7.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, "cubeImage8.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, "cubeImage9.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, "cubeImage10.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, "cubeImage11.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image1, "cubeImage0.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image2, "cubeImage1.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image3, "cubeImage2.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image4, "cubeImage3.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image5, "cubeImage4.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image6, "cubeImage5.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image7, "cubeImage6.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image8, "cubeImage7.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image9, "cubeImage8.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image10, "cubeImage9.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image11, "cubeImage10.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image12, "cubeImage11.jpg", newDirectory);
                 }
 
             }
@@ -113,7 +113,7 @@ namespace UPJAR
         /// </summary>
         /// <param name="url">url to json service</param>
         /// <param name="name">name of asset</param>
-        private void  DownloadFile(string url, string name, string location)
+        private void  DownloadFile(string url, string imagename,string name, string location)
         {
 
             // i want a real url
@@ -150,10 +150,11 @@ namespace UPJAR
                 
                     Console.WriteLine(name1);
                     var newFileName = Path.Combine(location);
-                 
+
 
                     // Gets the stream containing the file for the app.
-                    Stream fileStream = File.Create(newFileName);
+                    Console.WriteLine(newFileName);
+                    Stream fileStream = File.Create(newFileName+ "/" + imagename);
 
                     // Copy web stream to file stream
                     dataStream.CopyTo(fileStream);
