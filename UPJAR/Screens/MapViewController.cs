@@ -13,7 +13,7 @@ namespace UPJAR
         UISegmentedControl mapTypeSelection;
         CLLocationManager location = new CLLocationManager();
 
-        public MapViewController (IntPtr handle) : base (handle)
+        public MapViewController(IntPtr handle) : base(handle)
         {
         }
 
@@ -61,8 +61,12 @@ namespace UPJAR
             mapView.Delegate = new MapDelegate(this);
 
             var annotation = new BasicMapAnnotation
-                (new CLLocationCoordinate2D(40.2675, -78.8357), "UPJ", "Blackington Hall");
+                (new CLLocationCoordinate2D(40.2675, -78.8357), "UPJ", "Blackington Hall", "QR location");
             mapView.AddAnnotation(annotation);
+
+            var annotation2 = new BasicMapAnnotation
+                (new CLLocationCoordinate2D(40.2675, -78.6357), "UPJ", "Blackington Hall", "QR location");
+            mapView.AddAnnotation(annotation2);
 
             View.AddSubview(mapTypeSelection);
 
@@ -103,7 +107,8 @@ namespace UPJAR
         class BasicMapAnnotation : MKAnnotation
         {
             CLLocationCoordinate2D coord;
-            string title, subtitle;
+            string title, subtitle, location;
+
 
             public override CLLocationCoordinate2D Coordinate { get { return coord; } }
             public override void SetCoordinate(CLLocationCoordinate2D value)
@@ -112,11 +117,22 @@ namespace UPJAR
             }
             public override string Title { get { return title; } }
             public override string Subtitle { get { return subtitle; } }
-            public BasicMapAnnotation(CLLocationCoordinate2D coordinate, string title, string subtitle)
+
+            public string GetLocation
+            {
+                get
+                {
+                    return location;
+                }
+            }
+
+            public BasicMapAnnotation(CLLocationCoordinate2D coordinate, string title, string subtitle, string location)
             {
                 this.coord = coordinate;
                 this.title = title;
                 this.subtitle = subtitle;
+                this.location = location;
+
             }
         }
 
@@ -125,6 +141,8 @@ namespace UPJAR
             protected string annotationIdentifier = "BasicAnnotation";
             UIButton detailButton;
             MapViewController parent;
+            UIImageView image;
+
             public MapDelegate(MapViewController parent)
             {
                 this.parent = parent;
@@ -138,6 +156,7 @@ namespace UPJAR
             {
                 // try and dequeue the annotation view
                 MKAnnotationView annotationView = mapView.DequeueReusableAnnotation(annotationIdentifier);
+
                 // if we couldn't dequeue one, create a new one
                 if (annotationView == null)
                     annotationView = new MKPinAnnotationView(annotation, annotationIdentifier);
@@ -147,25 +166,43 @@ namespace UPJAR
                 annotationView.CanShowCallout = true;
                 (annotationView as MKPinAnnotationView).AnimatesDrop = true;
                 (annotationView as MKPinAnnotationView).PinColor = MKPinAnnotationColor.Green;
+
+
                 annotationView.Selected = true;
                 // you can add an accessory view, in this case, we'll add a button on the right, and an image on the left
                 detailButton = UIButton.FromType(UIButtonType.DetailDisclosure);
                 detailButton.TouchUpInside += (s, e) => {
                     Console.WriteLine("Clicked");
                     //Create Alert (can use an alert to give cube location for each given spot)-
-                    var detailAlert = UIAlertController.Create("Annotation Clicked", "You clicked on " +
-                        (annotation as MKAnnotation).Coordinate.Latitude.ToString() + ", " +
-                        (annotation as MKAnnotation).Coordinate.Longitude.ToString(), UIAlertControllerStyle.Alert);
+                    var detailAlert = UIAlertController.Create("About the QR location...", (annotation as BasicMapAnnotation).GetLocation, UIAlertControllerStyle.Alert);
                     detailAlert.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
                     parent.PresentViewController(detailAlert, true, null);
                 };
                 annotationView.RightCalloutAccessoryView = detailButton;
-                annotationView.LeftCalloutAccessoryView = new UIImageView(UIImage.FromBundle("29_icon.png"));
+                annotationView.LeftCalloutAccessoryView = null;
+
+
+
                 return annotationView;
             }
 
-			public override void DidUpdateUserLocation(MKMapView mapView, MKUserLocation userLocation)
+			public override void DidSelectAnnotationView(MKMapView mapView, MKAnnotationView view)
 			{
+                
+                image = new UIImageView(new CGRect(-84, 0, 200, 200));
+                image.Image = UIImage.FromBundle("Test.png");
+                view.AddSubview(image);
+			}
+
+			public override void DidDeselectAnnotationView(MKMapView mapView, MKAnnotationView view)
+			{
+
+                image.RemoveFromSuperview();
+
+			}
+
+			public override void DidUpdateUserLocation(MKMapView mapView, MKUserLocation userLocation)
+            {
                 mapView.DidUpdateUserLocation += (sender, e) =>
                 {
                     if (mapView.UserLocation != null)
@@ -175,7 +212,7 @@ namespace UPJAR
                         mapView.Region = new MKCoordinateRegion(coords, span);
                     }
                 };
-			}
+            }
 
             public double MilesToLatitudeDegrees(double miles)
             {
@@ -195,9 +232,9 @@ namespace UPJAR
                 return (miles / radiusAtLatitude) * radianToDegree;
             }
 
-			// as an optimization, you should override this method to add or remove annotations as the
-			// map zooms in or out.
-			public override void RegionChanged(MKMapView mapView, bool animated) { }
+            // as an optimization, you should override this method to add or remove annotations as the
+            // map zooms in or out.
+            public override void RegionChanged(MKMapView mapView, bool animated) { }
         }
 
     }
