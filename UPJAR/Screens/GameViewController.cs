@@ -64,6 +64,8 @@ namespace UPJAR
             Console.WriteLine("hello");
             if (result != null)
                 Console.WriteLine("REEEe");
+
+            //if result is equal to one of the json locations open ar 
             sceneView = new ARSCNView
             {
                 Frame = View.Frame,
