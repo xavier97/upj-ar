@@ -22,8 +22,6 @@ namespace UPJAR
 
             Console.WriteLine(path);
 
-           
-
             if (Reachability.IsHostReachable(webserviceURL)) // IF network is available...
             {
                 // Checks for any changes from the webservice. If there are changes (y/n), import the files.
@@ -36,7 +34,11 @@ namespace UPJAR
                 {
                     // this needs fixed
                     MakeAssetList(); // puts location of objects in memory
-                    UpdateAssets(); 
+                    UpdateAssets();
+
+                    // i feel like this is bad code...
+                    GameViewController gameViewController = new GameViewController();
+                    gameViewController.MakeAssetList(assetList); // pass list to GameViewController
                 }
             }
         }
@@ -55,10 +57,6 @@ namespace UPJAR
 
             string onlineJson = WebJsonToString(); // text of web json
             string cachedJson = LocalJsonToString(); // text of cached json (from local .json file)
-
-            //TEST STRINGS
-            //Console.WriteLine(onlineJson);
-            //Console.WriteLine(cachedJson);
 
             if (!string.Equals(onlineJson, cachedJson)) // Checks if there is any change to the files. if not the same, then replace cache file
             {
@@ -113,16 +111,15 @@ namespace UPJAR
         /// </summary>
         /// <param name="url">url to json service</param>
         /// <param name="name">name of asset</param>
-        private void  DownloadFile(string url, string imagename,string name, string location)
+        private void DownloadFile(string url, string imagename,string name, string location)
         {
 
             // i want a real url
-
-        
             string replace = "/var/www/html/ar-web/assets/";
             url = url.Replace(replace, "");
             HttpWebRequest myHttpWebRequest;
-            HttpWebResponse myHttpWebResponse ;
+            HttpWebResponse myHttpWebResponse;
+
          try
             {
                 // Creates an HttpWebRequest for the specified URL. 
