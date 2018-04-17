@@ -23,27 +23,39 @@ namespace UPJAR
 
             Console.WriteLine(path);
 
-           
+            if (assetList == null)
+            {
+                assetList = new List<CubeDetail>();
+            }
 
             if (Reachability.IsHostReachable(webserviceURL)) // IF network is available...
             {
-                // Checks for any changes from the webservice. If there are changes (y/n), import the files.
+                // Checks for any changes from the webservice. If there are changes, get new data based on updated json.
                 if (isChange()) // Yes.
                 {
-                    // TODO: Load up load screen view 1st
-                    MakeAssetList(); // puts location of objects in memory
+                    assetList = MakeAssetList(); // puts location of objects in memory
+
                     UpdateAssets(); // puts objects into storage
                 }
-                else // No.
+                else
                 {
-                    // this needs fixed
-                    MakeAssetList(); // puts location of objects in memory
+                    assetList = MakeAssetList(); // puts location of objects in memory
+                }
+
+                int directoryCount = Directory.GetDirectories(path).Length;
+                Console.WriteLine(directoryCount);
+                Console.WriteLine(assetList.Count);
+                if (directoryCount + 1 < assetList.Count) // Check if any files are missing. If yes, download them
+                {
+                    Console.WriteLine("get new stuff");
+                    UpdateAssets();
                 }
             }
         }
 
         /// <summary>
-        /// Checks if the webservice updated with any new information. If yes, then download json as a text file
+        /// Checks if the webservice updated with any new information. If yes, then download json as a t
+        /// Text file
         /// </summary>
         /// <returns><c>true</c>, if change was made, <c>false</c> otherwise.</returns>
         private bool isChange()
@@ -56,10 +68,6 @@ namespace UPJAR
 
             string onlineJson = WebJsonToString(); // text of web json
             string cachedJson = LocalJsonToString(); // text of cached json (from local .json file)
-
-            //TEST STRINGS
-            //Console.WriteLine(onlineJson);
-            //Console.WriteLine(cachedJson);
 
             if (!string.Equals(onlineJson, cachedJson)) // Checks if there is any change to the files. if not the same, then replace cache file
             {
@@ -77,6 +85,8 @@ namespace UPJAR
         /// </summary>
         private void UpdateAssets()
         {
+            Console.WriteLine("update assets");
+
             const int ASSET_COUNT = 11; // number of assets that make up the cube/ar tour scene
 
             for (int member = 1; member < assetList.Count; member++)
@@ -84,7 +94,7 @@ namespace UPJAR
                 
                 // make a new directory to organize assets
                 newDirectory = path + "/asset" + member.ToString();
-                 Directory.CreateDirectory(newDirectory);
+                Directory.CreateDirectory(newDirectory);
 
                 for (int count = 0; count < ASSET_COUNT; count++)
                 {
@@ -112,26 +122,28 @@ namespace UPJAR
         /// Good doc: https://docs.microsoft.com/en-us/xamarin/ios/app-fundamentals/file-system/
         /// and: https://stackoverflow.com/questions/411592/how-do-i-save-a-stream-to-a-file-in-c?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
         /// </summary>
-        /// <param name="url">url to json service</param>
-        /// <param name="name">name of asset</param>
-        private void DownloadFile(string url, string imagename,string name, string location)
+        /// <param name="url">Directory to json service</param>
+        /// <param name="assetName">Name of asset in the asset list</param>
+        /// <param name="imagename">Name the image should have once it's downloaded</param>
+        /// <param name="location">local folder to store image</param>
+        private void DownloadFile(string url, string imagename,string assetName, string location)
         {
 
             // i want a real url
-
-        
             string replace = "/var/www/html/ar-web/assets/";
             url = url.Replace(replace, "");
             HttpWebRequest myHttpWebRequest;
-            HttpWebResponse myHttpWebResponse ;
+            HttpWebResponse myHttpWebResponse;
+
          try
             {
                 // Creates an HttpWebRequest for the specified URL. 
-                Console.WriteLine(name);
+                Console.WriteLine(assetName);
 
-                name1 = name;
+                name1 = assetName;
 
-                myHttpWebRequest  = (HttpWebRequest)WebRequest.Create("http://ec2-54-191-254-89.us-west-2.compute.amazonaws.com/ar-web/assets/" + url + name);
+                myHttpWebRequest  = (HttpWebRequest)WebRequest.Create("http://ec2-54-191-254-89.us-west-2.compute.amazonaws.com/ar-web/assets/" + url + assetName);
+
                 myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
 
                 string method;
@@ -202,7 +214,7 @@ namespace UPJAR
             {
                 return File.ReadAllText(jsonPath);
             }
-            catch (FileNotFoundException fnfe) // this literally should not happen irl
+            catch (FileNotFoundException fnfe) // this should not happen irl
             {
                 Console.WriteLine("\nThe following Exception was raised : {0}. " +
                                   "(Make sure that a json file was actually cached from the web!)", fnfe.Message);
@@ -223,20 +235,19 @@ namespace UPJAR
         /// <summary>
         /// Creates list of cube asset objects
         /// </summary>
-        private void MakeAssetList()
+        public List<CubeDetail> MakeAssetList()
         {
             Console.WriteLine("you are here");
 
-            if (assetList == null)
-            {
-                assetList = new List<CubeDetail>();
-            }
+            List<CubeDetail> tempList = new List<CubeDetail>();
 
             string json = LocalJsonToString(); // Gets json that's local
 
-            assetList = JsonConvert.DeserializeObject<List<CubeDetail>>(json); // Populate list with JSON objects
+            tempList = JsonConvert.DeserializeObject<List<CubeDetail>>(json); // Populate list with JSON objects
 
-            Console.WriteLine(assetList[6].ToString()); // TEST
+            Console.WriteLine(tempList[6].ToString()); // TEST
+
+            return tempList;
 
         }
 

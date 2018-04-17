@@ -17,28 +17,15 @@ namespace UPJAR
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-
         }
-
-		public override void ViewWillAppear(bool animated)
-		{
-            base.ViewWillAppear(animated);
-		}
 
 		public override void ViewDidAppear(bool animated)
 		{
             base.ViewDidAppear(animated);
 
-
             // Check/Pull all new stuff from service once per app load
             FileManager fileManager = new FileManager();
 		}
-
-		//TEST
-		private int assetKey()
-        {
-            return 1;
-        }
 
 		partial void MapButton_TouchUpInside(UIButton sender)
         {
