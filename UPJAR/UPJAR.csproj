@@ -100,6 +100,8 @@
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Test.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Test.imageset\download.png" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
@@ -109,6 +111,7 @@
     <Folder Include="Resources\" />
     <Folder Include="Screens\" />
     <Folder Include="File Management\" />
+    <Folder Include="Assets.xcassets\Test.imageset\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
