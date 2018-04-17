@@ -12,15 +12,12 @@ namespace UPJAR
     {
         private ARSCNView sceneView;
         private string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        private int assetKey;
         private List<CubeDetail> assetList;
 
         protected GameViewController(IntPtr handle) : base(handle)
         {
             Console.WriteLine(path);
-        }
-
-        public GameViewController() // default constructors
-        {
         }
 
         private SCNMaterial[] LoadMaterials()
@@ -32,15 +29,26 @@ namespace UPJAR
             var d = new SCNMaterial();
 
             // Determine types of texture to use, based on data sent by QR screen
-            int key = AssetKey();
-            string textureFolderPath = path + "/asset" + key;
+            string textureFolderPath = path + "/asset" + assetKey;
 
-            string[] Files = Directory.GetFiles(textureFolderPath, "*.png"); // Getting Text files
+            Console.WriteLine(textureFolderPath);
 
-            a.Diffuse.Contents = UIImage.FromFile(path + "/" + Files[0]);
-            b.Diffuse.Contents = UIImage.FromFile(path + "/" + Files[1]);
-            c.Diffuse.Contents = UIImage.FromFile(path + "/" + Files[2]);
-            d.Diffuse.Contents = UIImage.FromFile(path + "/" + Files[3]);
+            string[] Files = Directory.GetFiles(textureFolderPath, "*.jpg"); // Getting jpg files
+
+            Console.WriteLine(Files[0]);
+
+            try
+            {
+                a.Diffuse.Contents = UIImage.FromFile(Files[0]);
+                b.Diffuse.Contents = UIImage.FromFile(Files[1]);
+                c.Diffuse.Contents = UIImage.FromFile(Files[2]);
+                d.Diffuse.Contents = UIImage.FromFile(Files[3]);
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                Console.WriteLine("\nIndexOutOfRangeException raised. The following error occured : {0}\r" +
+                                  "Make sure enough images are in the specified folder (determined by key var).", e.Message);
+            }
 
             SCNMaterial[] joe = new SCNMaterial[] { a, a, a, a, a, a };
             // This demo was originally in F# :-)   
@@ -66,15 +74,36 @@ namespace UPJAR
             var scanner = new ZXing.Mobile.MobileBarcodeScanner();
 
             var result = await scanner.Scan();
-            Console.WriteLine("hello");
 
-            // get links from json
+            FileManager fileManager = new FileManager();
+            if (assetList == null)
+            {
+                assetList = new List<CubeDetail>();
+            }
 
+            assetList = fileManager.MakeAssetList(); // Get asset list
+
+            Console.WriteLine(assetList.Count);
 
             // if result matches location from json, pull up spec. qr; else reload qr scanner
             if (result != null)
             {
-                Console.WriteLine("REEEe");
+                int count = 0;
+                while (count < assetList.Count)
+                {
+                    Console.WriteLine(count);
+                    if (result.Text == assetList[count].name)
+                    {
+                        Console.WriteLine(result.Text);
+                        assetKey = count;
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Not a good QR.");
+                    }
+                    count++;
+                }
                 // TODO : update AssetKey Method
             }
 
@@ -86,8 +115,6 @@ namespace UPJAR
                 ARSCNDebugOptions.ShowWorldOrigin,
                 UserInteractionEnabled = true
             };
-
-
 
 
             View.AddSubview(sceneView);
@@ -160,23 +187,13 @@ namespace UPJAR
 
             sceneView.Session.Run(configuration, ARSessionRunOptions.ResetTracking |
               ARSessionRunOptions.RemoveExistingAnchors);
-
-
-
-
-
-
+            
 
             // allows the user to manipulate the camera
 
 
             // show statistics such as fps and timing information
             sceneView.ShowsStatistics = true;
-
-
-
-
-
 
 
 
@@ -202,8 +219,6 @@ namespace UPJAR
         {
             base.ViewWillAppear(animated);
 
-
-
         }
 
         #region helpers
@@ -215,14 +230,6 @@ namespace UPJAR
         private int AssetKey()
         {
             return 1;
-        }
-
-        /// <summary>
-        /// Creates list of cube asset objects
-        /// </summary>
-        public void MakeAssetList(List<CubeDetail> assetList)
-        {
-
         }
         #endregion
 

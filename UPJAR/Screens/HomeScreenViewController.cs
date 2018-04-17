@@ -18,13 +18,18 @@ namespace UPJAR
         {
             base.ViewDidLoad();
 
-            // Check/Pull all new stuff from service once per app load
-            FileManager fileManager = new FileManager();
-
         }
 
-        //TEST
-        private int assetKey()
+		public override void ViewDidAppear(bool animated)
+		{
+            base.ViewDidAppear(animated);
+
+            // Check/Pull all new stuff from service once per app load
+            FileManager fileManager = new FileManager();
+		}
+
+		//TEST
+		private int assetKey()
         {
             return 1;
         }
