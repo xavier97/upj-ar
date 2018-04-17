@@ -107,7 +107,6 @@ namespace UPJAR
                 // TODO : update AssetKey Method
             }
 
-
             sceneView = new ARSCNView
             {
                 Frame = View.Frame,

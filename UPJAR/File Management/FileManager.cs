@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace UPJAR
 {
@@ -33,6 +34,7 @@ namespace UPJAR
                 if (isChange()) // Yes.
                 {
                     assetList = MakeAssetList(); // puts location of objects in memory
+
                     UpdateAssets(); // puts objects into storage
                 }
                 else
@@ -139,7 +141,9 @@ namespace UPJAR
                 Console.WriteLine(assetName);
 
                 name1 = assetName;
+
                 myHttpWebRequest  = (HttpWebRequest)WebRequest.Create("http://ec2-54-191-254-89.us-west-2.compute.amazonaws.com/ar-web/assets/" + url + assetName);
+
                 myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
 
                 string method;
