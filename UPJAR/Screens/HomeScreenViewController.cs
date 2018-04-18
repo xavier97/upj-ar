@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using UIKit;
 using System.Collections.Generic;
+using CoreGraphics;
 
 namespace UPJAR
 {
@@ -17,6 +18,7 @@ namespace UPJAR
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+
         }
 
 		public override void ViewDidAppear(bool animated)
@@ -37,9 +39,5 @@ namespace UPJAR
             Console.WriteLine("go to ar screen");
         }
 
-        partial void ViewQR_TouchUpInside(UIButton sender)
-        {
-            Console.WriteLine("go to qr screen");
-        }
     }
 }
