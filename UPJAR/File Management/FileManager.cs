@@ -20,6 +20,7 @@ namespace UPJAR
         private string name1;
         public FileManager()
         {
+            Console.WriteLine("heloo");
 
             Console.WriteLine(path);
 
@@ -89,7 +90,7 @@ namespace UPJAR
 
             const int ASSET_COUNT = 11; // number of assets that make up the cube/ar tour scene
 
-            for (int member = 1; member < assetList.Count; member++)
+            for (int member = 0; member < assetList.Count; member++)
             {
                 
                 // make a new directory to organize assets
@@ -141,7 +142,8 @@ namespace UPJAR
                 Console.WriteLine(assetName);
 
                 name1 = assetName;
-
+                Console.WriteLine(assetName);
+                Console.Write(url);
                 myHttpWebRequest  = (HttpWebRequest)WebRequest.Create("http://ec2-54-191-254-89.us-west-2.compute.amazonaws.com/ar-web/assets/" + url + assetName);
 
                 myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
@@ -245,7 +247,7 @@ namespace UPJAR
 
             tempList = JsonConvert.DeserializeObject<List<CubeDetail>>(json); // Populate list with JSON objects
 
-            Console.WriteLine(tempList[6].ToString()); // TEST
+            // TEST
 
             return tempList;
 
