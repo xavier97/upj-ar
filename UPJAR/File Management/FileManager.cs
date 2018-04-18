@@ -142,8 +142,7 @@ namespace UPJAR
                 Console.WriteLine(assetName);
 
                 name1 = assetName;
-                Console.WriteLine(assetName);
-                Console.Write(url);
+
                 myHttpWebRequest  = (HttpWebRequest)WebRequest.Create("http://ec2-54-191-254-89.us-west-2.compute.amazonaws.com/ar-web/assets/" + url + assetName);
 
                 myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
@@ -247,7 +246,7 @@ namespace UPJAR
 
             tempList = JsonConvert.DeserializeObject<List<CubeDetail>>(json); // Populate list with JSON objects
 
-            // TEST
+
 
             return tempList;
 

@@ -12,7 +12,7 @@ namespace UPJAR
     {
         private ARSCNView sceneView;
         private string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        private int assetKey;
+        private int assetKey = -1;
         private List<CubeDetail> assetList;
 
         protected GameViewController(IntPtr handle) : base(handle)
@@ -159,18 +159,16 @@ namespace UPJAR
                     }
                     else
                     {
-                        
                         Console.WriteLine("Not a good QR.");
                     }
                     count++;
                 }
-               
-             
-                // TODO : update AssetKey Method
-            }
-            if (assetKey == 0)
-            {
 
+            }
+            Console.WriteLine(assetKey);
+            if (assetKey == -1)
+            {
+                
                 var detailAlert = UIAlertController.Create("About the QR location...","helo", UIAlertControllerStyle.Alert);
                 detailAlert.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
 
@@ -191,9 +189,10 @@ namespace UPJAR
                 UserInteractionEnabled = true
             };
 
-
             View.AddSubview(sceneView);
 
+            // TODO: TEST THIS
+            AddFooter(); // Add footer with buttons
 
             var configuration = new ARWorldTrackingConfiguration
             {
@@ -293,7 +292,25 @@ namespace UPJAR
             }
         }
 
-   
+        /// <summary>
+        /// Adds footer to view.
+        /// </summary>
+        private void AddFooter()
+        {
+            // Make footer buttons here.
+            this.SetToolbarItems(new UIBarButtonItem[] {
+                new UIBarButtonItem(UIBarButtonSystemItem.Refresh, (s,e) =>
+                {
+                    Console.WriteLine("Refresh clicked");
+                })
+                , new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace) { Width = 50 }
+                , new UIBarButtonItem(UIBarButtonSystemItem.Pause, (s,e) => {
+                    Console.WriteLine ("Pause clicked");
+                })
+            }, false);
+
+            this.NavigationController.ToolbarHidden = false;
+        }
 
         public override void DidReceiveMemoryWarning()
         {
@@ -317,18 +334,6 @@ namespace UPJAR
             base.ViewWillAppear(animated);
 
         }
-
-        #region helpers
-        /// <summary>
-        /// Represents the key that the QR scanner should send to let AR
-        /// know what textures to use.
-        /// </summary>
-        /// <returns>The key.</returns>
-        //private int AssetKey()
-        //{
-        //    return ;
-        //}
-        #endregion
 
     }
 }
