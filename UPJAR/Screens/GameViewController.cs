@@ -50,7 +50,7 @@ namespace UPJAR
                                   "Make sure enough images are in the specified folder (determined by key var).", e.Message);
             }
 
-            SCNMaterial[] joe = new SCNMaterial[] { a, a, a, a, a, a };
+            SCNMaterial[] joe = new SCNMaterial[] { a, b, c, d,a, a };
             // This demo was originally in F# :-)   
             return joe;
         }
@@ -58,16 +58,72 @@ namespace UPJAR
         private SCNMaterial[] LoadMaterials2()
         {
 
-            var z = new SCNMaterial();
-            var y = new SCNMaterial();
+            var a = new SCNMaterial();
+            var b = new SCNMaterial();
+            var c = new SCNMaterial();
+            var d = new SCNMaterial();
 
-            z.Diffuse.Contents = UIImage.FromFile(path + "/texture.png");
-            y.Diffuse.Contents = UIColor.Red;
+            // Determine types of texture to use, based on data sent by QR screen
+            string textureFolderPath = path + "/asset" + assetKey;
 
-            SCNMaterial[] red = new SCNMaterial[] { y, y, y, y, y, y };
+            Console.WriteLine(textureFolderPath);
+
+            string[] Files = Directory.GetFiles(textureFolderPath, "*.jpg"); // Getting jpg files
+
+            Console.WriteLine(Files[0]);
+
+            try
+            {
+                a.Diffuse.Contents = UIImage.FromFile(Files[4]);
+                b.Diffuse.Contents = UIImage.FromFile(Files[5]);
+                c.Diffuse.Contents = UIImage.FromFile(Files[6]);
+                d.Diffuse.Contents = UIImage.FromFile(Files[7]);
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                Console.WriteLine("\nIndexOutOfRangeException raised. The following error occured : {0}\r" +
+                                  "Make sure enough images are in the specified folder (determined by key var).", e.Message);
+            }
+
+            SCNMaterial[] joe = new SCNMaterial[] { a, b, c, d, a, a };
             // This demo was originally in F# :-)   
-            return red;
+            return joe;
         }
+        private SCNMaterial[] LoadMaterials3()
+        {
+
+            var a = new SCNMaterial();
+            var b = new SCNMaterial();
+            var c = new SCNMaterial();
+            var d = new SCNMaterial();
+
+            // Determine types of texture to use, based on data sent by QR screen
+            string textureFolderPath = path + "/asset" + assetKey;
+
+            Console.WriteLine(textureFolderPath);
+
+            string[] Files = Directory.GetFiles(textureFolderPath, "*.jpg"); // Getting jpg files
+
+            Console.WriteLine(Files[0]);
+
+            try
+            {
+                a.Diffuse.Contents = UIImage.FromFile(Files[8]);
+                b.Diffuse.Contents = UIImage.FromFile(Files[9]);
+                c.Diffuse.Contents = UIImage.FromFile(Files[10]);
+                d.Diffuse.Contents = UIImage.FromFile(Files[11]);
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                Console.WriteLine("\nIndexOutOfRangeException raised. The following error occured : {0}\r" +
+                                  "Make sure enough images are in the specified folder (determined by key var).", e.Message);
+            }
+
+            SCNMaterial[] joe = new SCNMaterial[] { a, b, c, d, a, a };
+            // This demo was originally in F# :-)   
+            return joe;
+        }
+
         public async void RefreshDataAsync()
         {
             Console.WriteLine("hello");
@@ -92,21 +148,41 @@ namespace UPJAR
                 while (count < assetList.Count)
                 {
                     Console.WriteLine(count);
+                  
+
                     if (result.Text == assetList[count].name)
                     {
+                       
                         Console.WriteLine(result.Text);
                         assetKey = count;
                         break;
                     }
                     else
                     {
+                        
                         Console.WriteLine("Not a good QR.");
                     }
                     count++;
                 }
+               
+             
                 // TODO : update AssetKey Method
             }
+            if (assetKey == 0)
+            {
 
+                var detailAlert = UIAlertController.Create("About the QR location...","helo", UIAlertControllerStyle.Alert);
+                detailAlert.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
+
+
+                RefreshDataAsync();
+               
+               
+
+            }
+            else{
+                
+           
             sceneView = new ARSCNView
             {
                 Frame = View.Frame,
@@ -126,12 +202,12 @@ namespace UPJAR
             };
 
             configuration.PlaneDetection = ARPlaneDetection.Horizontal;
-            sceneView.Scene = SCNScene.FromFile("art.scnassets/cube");
+            sceneView.Scene = new SCNScene();
 
             var material = new SCNMaterial();
 
             // Determine types of texture to use, based on data sent by QR screen
-            int key = AssetKey();
+            int key = assetKey;
             string textureFolderPath = path + "/asset" + key;
 
             string[] Files = Directory.GetFiles(textureFolderPath, "*.png"); // Getting Text files
@@ -145,7 +221,7 @@ namespace UPJAR
             material.LocksAmbientWithDiffuse = true;
 
 
-            var ship = sceneView.Scene.RootNode.FindChildNode("Cube", true);
+            var ship = new SCNNode();
 
 
             ship.Geometry = new SCNBox
@@ -153,8 +229,6 @@ namespace UPJAR
                 Width = 1,
                 Height = 1,
                 Length = 1,
-
-
             };
 
 
@@ -163,6 +237,9 @@ namespace UPJAR
 
             ship.Position = new SCNVector3(1f, 0f, 2f);
             ship.Scale = new SCNVector3(.4f, .4f, .4f);
+
+            sceneView.Scene.RootNode.AddChildNode(ship);
+
 
 
             var ship2 = ship.Clone();
@@ -177,26 +254,47 @@ namespace UPJAR
             };
             ship2.Geometry.Materials = LoadMaterials2();
 
+            sceneView.Scene.RootNode.AddChildNode(ship2);
 
             ship2.Position = new SCNVector3(-1f, 0f, 2f);
-            ship2.Scale = new SCNVector3(.4f, .4f, .4f);
-
-            sceneView.Scene.RootNode.Add(ship2);
+           
 
 
-            sceneView.Session.Run(configuration, ARSessionRunOptions.ResetTracking |
-              ARSessionRunOptions.RemoveExistingAnchors);
+
+                var ship3 = ship.Clone();
+
+            ship3.Geometry = new SCNBox
+            {
+                Width = 1,
+                Height = 1,
+                Length = 1,
+
+
+            };
+            ship3.Geometry.Materials = LoadMaterials3();
+
+
+           
+
+            sceneView.Scene.RootNode.AddChildNode(ship3);
+
+            ship3.Position = new SCNVector3(-3f, 0f, 2f);
+           
+
+            sceneView.Session.Run(configuration, ARSessionRunOptions.ResetTracking );
             
 
             // allows the user to manipulate the camera
 
 
             // show statistics such as fps and timing information
-            sceneView.ShowsStatistics = true;
+          
 
-
-
+            }
         }
+
+   
+
         public override void DidReceiveMemoryWarning()
         {
             base.DidReceiveMemoryWarning();
@@ -226,10 +324,10 @@ namespace UPJAR
         /// know what textures to use.
         /// </summary>
         /// <returns>The key.</returns>
-        private int AssetKey()
-        {
-            return 1;
-        }
+        //private int AssetKey()
+        //{
+        //    return ;
+        //}
         #endregion
 
     }
