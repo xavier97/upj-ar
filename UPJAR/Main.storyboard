@@ -79,27 +79,6 @@
                                     <segue destination="BV1-FR-VrT" kind="show" id="4687"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4940">
-                                <rect key="frame" x="52" y="509" width="310" height="185"/>
-                                <color key="backgroundColor" white="0.66666666666666696" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="310" id="4945"/>
-                                    <constraint firstAttribute="height" constant="185" id="4946"/>
-                                </constraints>
-                                <state key="normal" title="View QR">
-                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <real key="value" value="15"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="ArButton_TouchUpInside:" destination="4942" eventType="touchUpInside" id="4941"/>
-                                    <action selector="ViewQR_TouchUpInside:" destination="2065" id="4954" eventType="touchUpInside"/>
-                                    <segue id="5353" destination="5222" kind="show"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -109,10 +88,6 @@
                             <constraint id="5229" firstItem="4376" firstAttribute="leading" secondItem="2066" secondAttribute="leadingMargin" constant="32"/>
                             <constraint id="5230" firstItem="4376" firstAttribute="centerX" secondItem="2066" secondAttribute="centerX"/>
                             <constraint id="5231" firstItem="2266" firstAttribute="centerX" secondItem="2066" secondAttribute="centerX"/>
-                            <constraint id="5232" firstItem="4940" firstAttribute="top" secondItem="4376" secondAttribute="bottom" constant="24"/>
-                            <constraint id="5233" firstItem="4940" firstAttribute="leading" secondItem="2066" secondAttribute="leadingMargin" constant="32"/>
-                            <constraint id="5234" firstItem="4940" firstAttribute="centerX" secondItem="2066" secondAttribute="centerX"/>
-                            <constraint id="5603" firstItem="2063" firstAttribute="top" secondItem="4940" secondAttribute="bottom" constant="42"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="UPJ AR Home" id="4153"/>
@@ -120,7 +95,6 @@
                         <outlet property="HomeScreen" destination="2066" id="name-outlet-2066"/>
                         <outlet property="arButton" destination="4376" id="name-outlet-4376"/>
                         <outlet property="mapButton" destination="2266" id="name-outlet-2266"/>
-                        <outlet property="ViewQR" destination="4940" id="name-outlet-4940"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2067" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -164,25 +138,8 @@
             </objects>
             <point key="canvasLocation" x="930" y="803"/>
         </scene>
-        <scene sceneID="5221">
-            <objects>
-                <viewController id="5222" sceneMemberID="viewController" customClass="QRViewController" title="QR Screen">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="5219"/>
-                        <viewControllerLayoutGuide type="bottom" id="5220"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="5223">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <connections>
-                        <outlet property="QRScreen" destination="5223" id="name-outlet-5223"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5224" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1498" y="1769"/>
-        </scene>
     </scenes>
+    <resources>
+        <image name="Test" width="259" height="194"/>
+    </resources>
 </document>
