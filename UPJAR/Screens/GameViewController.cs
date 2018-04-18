@@ -12,7 +12,7 @@ namespace UPJAR
     {
         private ARSCNView sceneView;
         private string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        private int assetKey;
+        private int assetKey = -1;
         private List<CubeDetail> assetList;
 
         protected GameViewController(IntPtr handle) : base(handle)
@@ -165,9 +165,10 @@ namespace UPJAR
                 }
 
             }
-            if (assetKey == 0)
+            Console.WriteLine(assetKey);
+            if (assetKey == -1)
             {
-
+                
                 var detailAlert = UIAlertController.Create("About the QR location...","helo", UIAlertControllerStyle.Alert);
                 detailAlert.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
 
