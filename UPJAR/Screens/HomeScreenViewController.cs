@@ -19,14 +19,13 @@ namespace UPJAR
         {
             base.ViewDidLoad();
 
+            // Check/Pull all new stuff from service once per app load
+            FileManager fileManager = new FileManager(HomeScreen);
         }
 
 		public override void ViewDidAppear(bool animated)
 		{
             base.ViewDidAppear(animated);
-
-            // Check/Pull all new stuff from service once per app load
-            FileManager fileManager = new FileManager();
 		}
 
 		partial void MapButton_TouchUpInside(UIButton sender)

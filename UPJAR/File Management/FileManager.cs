@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using UIKit;
 
 namespace UPJAR
 {
@@ -18,7 +20,8 @@ namespace UPJAR
         private string newDirectory;
         private List<CubeDetail> assetList; // List of cube's assets
         private string name1;
-        public FileManager()
+
+        public FileManager(UIView View)
         {
             Console.WriteLine("heloo");
 
@@ -36,7 +39,7 @@ namespace UPJAR
                 {
                     assetList = MakeAssetList(); // puts location of objects in memory
 
-                    UpdateAssets(); // puts objects into storage
+                    UpdateAssets(View); // puts objects into storage
                 }
                 else
                 {
@@ -46,11 +49,14 @@ namespace UPJAR
                 int directoryCount = Directory.GetDirectories(path).Length;
                 Console.WriteLine(directoryCount);
                 Console.WriteLine(assetList.Count);
+
                 if (directoryCount + 1 < assetList.Count) // Check if any files are missing. If yes, download them
                 {
                     Console.WriteLine("get new stuff");
-                    UpdateAssets();
+
+                    UpdateAssets(View);
                 }
+
             }
         }
 
@@ -84,11 +90,21 @@ namespace UPJAR
         /// <summary>
         /// Loads documents from web service into app
         /// </summary>
-        private void UpdateAssets()
+        async private void UpdateAssets(UIView View)
         {
             Console.WriteLine("update assets");
 
             const int ASSET_COUNT = 11; // number of assets that make up the cube/ar tour scene
+
+            // Start up loading screen
+            LoadingOverlay loadPop; // ref to overlay control
+            var bounds = UIScreen.MainScreen.Bounds;
+            loadPop = new LoadingOverlay(bounds);
+            View.InvokeOnMainThread(() =>
+            {
+                // show the loading overlay on the UI thread using the correct orientation sizing
+                View.Add(loadPop);
+            });
 
             for (int member = 0; member < assetList.Count; member++)
             {
@@ -100,21 +116,24 @@ namespace UPJAR
                 for (int count = 0; count < ASSET_COUNT; count++)
                 {
 
-                    DownloadFile(assetList[member].asset, assetList[member].image1, "cubeImage0.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image2, "cubeImage1.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image3, "cubeImage2.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image4, "cubeImage3.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image5, "cubeImage4.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image6, "cubeImage5.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image7, "cubeImage6.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image8, "cubeImage7.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image9, "cubeImage8.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image10, "cubeImage9.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image11, "cubeImage10.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image12, "cubeImage11.jpg", newDirectory);
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image1, "cubeImage0.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image2, "cubeImage1.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image3, "cubeImage2.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image4, "cubeImage3.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image5, "cubeImage4.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image6, "cubeImage5.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image7, "cubeImage6.jpg", newDirectory));
+                    await Task.Run (() => DownloadFile(assetList[member].asset, assetList[member].image8, "cubeImage7.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image9, "cubeImage8.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image10, "cubeImage9.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image11, "cubeImage10.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image12, "cubeImage11.jpg", newDirectory));
                 }
-
             }
+            View.InvokeOnMainThread(() =>
+            {
+                loadPop.Hide();
+            });
         }
 
         /// <summary>
