@@ -88,7 +88,7 @@ namespace UPJAR
         {
             Console.WriteLine("update assets");
 
-            const int ASSET_COUNT = 11; // number of assets that make up the cube/ar tour scene
+            const int ASSET_COUNT = 12; // number of assets that make up the cube/ar tour scene
 
             for (int member = 0; member < assetList.Count; member++)
             {
@@ -112,13 +112,14 @@ namespace UPJAR
                     DownloadFile(assetList[member].asset, assetList[member].image10, "cubeImage9.jpg", newDirectory);
                     DownloadFile(assetList[member].asset, assetList[member].image11, "cubeImage10.jpg", newDirectory);
                     DownloadFile(assetList[member].asset, assetList[member].image12, "cubeImage11.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].audio, "audio.mp3", newDirectory);
                 }
 
             }
         }
 
         /// <summary>
-        /// Verifies the existence of a web resource &, if exists, downloads source.
+        /// Verifies the existence of a web resource  if exists, downloads source.
         /// Expected result: write all web data (audio, images) to Document folder of app.
         /// Good doc: https://docs.microsoft.com/en-us/xamarin/ios/app-fundamentals/file-system/
         /// and: https://stackoverflow.com/questions/411592/how-do-i-save-a-stream-to-a-file-in-c?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
