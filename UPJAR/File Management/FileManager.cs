@@ -94,7 +94,7 @@ namespace UPJAR
         {
             Console.WriteLine("update assets");
 
-            const int ASSET_COUNT = 11; // number of assets that make up the cube/ar tour scene
+            const int ASSET_COUNT = 12; // number of assets that make up the cube/ar tour scene
 
             // Start up loading screen
             LoadingOverlay loadPop; // ref to overlay control
@@ -115,19 +115,19 @@ namespace UPJAR
 
                 for (int count = 0; count < ASSET_COUNT; count++)
                 {
-
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image1, "cubeImage0.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image2, "cubeImage1.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image3, "cubeImage2.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image4, "cubeImage3.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image5, "cubeImage4.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image6, "cubeImage5.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image7, "cubeImage6.jpg", newDirectory));
-                    await Task.Run (() => DownloadFile(assetList[member].asset, assetList[member].image8, "cubeImage7.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image9, "cubeImage8.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image10, "cubeImage9.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image11, "cubeImage10.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image12, "cubeImage11.jpg", newDirectory));
+                    DownloadFile(assetList[member].asset, assetList[member].image1, "cubeImage0.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image2, "cubeImage1.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image3, "cubeImage2.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image4, "cubeImage3.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image5, "cubeImage4.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image6, "cubeImage5.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image7, "cubeImage6.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image8, "cubeImage7.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image9, "cubeImage8.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image10, "cubeImage9.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image11, "cubeImage10.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image12, "cubeImage11.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].audio, "audio.mp3", newDirectory);
                 }
             }
             View.InvokeOnMainThread(() =>
@@ -137,7 +137,7 @@ namespace UPJAR
         }
 
         /// <summary>
-        /// Verifies the existence of a web resource &, if exists, downloads source.
+        /// Verifies the existence of a web resource  if exists, downloads source.
         /// Expected result: write all web data (audio, images) to Document folder of app.
         /// Good doc: https://docs.microsoft.com/en-us/xamarin/ios/app-fundamentals/file-system/
         /// and: https://stackoverflow.com/questions/411592/how-do-i-save-a-stream-to-a-file-in-c?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa

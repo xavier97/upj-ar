@@ -1,4 +1,5 @@
 using CoreGraphics;
+using System.Collections.Generic;
 using CoreLocation;
 using Foundation;
 using MapKit;
@@ -12,9 +13,16 @@ namespace UPJAR
         MKMapView mapView;
         UISegmentedControl mapTypeSelection;
         CLLocationManager location = new CLLocationManager();
+        private static string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        private static string pinFolderPath = path + "/asset";
+        private int assetKey;
+        private List<CubeDetail> assetList;
+        FileManager fileManager = new FileManager();
+
 
         public MapViewController(IntPtr handle) : base(handle)
         {
+            Console.WriteLine(path);
         }
 
         public override void ViewDidLoad()
@@ -58,15 +66,30 @@ namespace UPJAR
                 }
             };
 
+            assetList = new List<CubeDetail>();
+            assetList = fileManager.MakeAssetList();
+            Console.WriteLine(assetList[0].ToString());
+
             mapView.Delegate = new MapDelegate(this);
 
-            var annotation = new BasicMapAnnotation
-                (new CLLocationCoordinate2D(40.2675, -78.8357), "UPJ", "Blackington Hall", "QR location");
-            mapView.AddAnnotation(annotation);
+            for (int i = 0; i < assetList.Count; i++){
+                var latitude = Double.Parse(assetList[i].Lat);
+                var longitude = Double.Parse(assetList[i].Long);
+                var title = assetList[i].name;
+                var desc = assetList[i].desc;
+                var cubeDesc = assetList[i].descLoc;
+                var cubeLoc = assetList[i].asset;
 
-            var annotation2 = new BasicMapAnnotation
-                (new CLLocationCoordinate2D(40.2675, -78.6357), "UPJ", "Blackington Hall", "QR location");
-            mapView.AddAnnotation(annotation2);
+                var imageFile = pinFolderPath + "1/cubeImage0.jpg";
+                UIImage image = UIImage.FromFile(imageFile);
+                    
+                var annotation = new BasicMapAnnotation
+                    (new CLLocationCoordinate2D(latitude, longitude), title, desc, cubeDesc, image);
+                mapView.AddAnnotation(annotation);
+
+            }
+
+
 
             View.AddSubview(mapTypeSelection);
 
@@ -77,7 +100,7 @@ namespace UPJAR
                 // User denied permission or device doesn't have GPS/location ability  
                 // create our location and zoom to Chicago  
                 CLLocationCoordinate2D coords = new CLLocationCoordinate2D(40.2675, -78.8357); // UPJ
-                MKCoordinateSpan span = new MKCoordinateSpan(MilesToLatitudeDegrees(20), MilesToLongitudeDegrees(20, coords.Latitude));
+                MKCoordinateSpan span = new MKCoordinateSpan(MilesToLatitudeDegrees(5), MilesToLongitudeDegrees(5, coords.Latitude));
 
                 // set the coords and zoom on the map  
                 mapView.Region = new MKCoordinateRegion(coords, span);
@@ -108,6 +131,7 @@ namespace UPJAR
         {
             CLLocationCoordinate2D coord;
             string title, subtitle, location;
+            UIImage cubeLocation;
 
 
             public override CLLocationCoordinate2D Coordinate { get { return coord; } }
@@ -118,6 +142,8 @@ namespace UPJAR
             public override string Title { get { return title; } }
             public override string Subtitle { get { return subtitle; } }
 
+            public UIImage GetImage{ get { return cubeLocation; }}
+
             public string GetLocation
             {
                 get
@@ -126,15 +152,21 @@ namespace UPJAR
                 }
             }
 
-            public BasicMapAnnotation(CLLocationCoordinate2D coordinate, string title, string subtitle, string location)
+            public BasicMapAnnotation(CLLocationCoordinate2D coordinate, string title, string subtitle, string location, UIImage image)
             {
                 this.coord = coordinate;
                 this.title = title;
                 this.subtitle = subtitle;
                 this.location = location;
+                this.cubeLocation = image;
 
             }
-        }
+
+			public override string ToString()
+			{
+                return string.Format(coord.ToString() + ',' + title + ',' + subtitle + ',' + location + ',' + cubeLocation);
+			}
+		}
 
         protected class MapDelegate : MKMapViewDelegate
         {
@@ -159,9 +191,9 @@ namespace UPJAR
 
                 // if we couldn't dequeue one, create a new one
                 if (annotationView == null)
-                    annotationView = new MKPinAnnotationView(annotation, annotationIdentifier);
+                    annotationView = new MKPinAnnotationView(annotation as BasicMapAnnotation, annotationIdentifier);
                 else // if we did dequeue one for reuse, assign the annotation to it
-                    annotationView.Annotation = annotation;
+                    annotationView.Annotation = (BasicMapAnnotation)annotation;
                 // configure our annotation view properties
                 annotationView.CanShowCallout = true;
                 (annotationView as MKPinAnnotationView).AnimatesDrop = true;
@@ -188,10 +220,12 @@ namespace UPJAR
 
 			public override void DidSelectAnnotationView(MKMapView mapView, MKAnnotationView view)
 			{
-                
+
                 image = new UIImageView(new CGRect(-84, 0, 200, 200));
-                image.Image = UIImage.FromBundle("Test.png");
+                image.Image = UIImage.FromFile(path + "/asset0/cubeimage0.jpg");
+                Console.WriteLine(view.Annotation.ToString());
                 view.AddSubview(image);
+
 			}
 
 			public override void DidDeselectAnnotationView(MKMapView mapView, MKAnnotationView view)
@@ -236,6 +270,7 @@ namespace UPJAR
             // map zooms in or out.
             public override void RegionChanged(MKMapView mapView, bool animated) { }
         }
+
 
     }
 }
