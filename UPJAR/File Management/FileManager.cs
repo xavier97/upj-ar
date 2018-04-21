@@ -115,19 +115,19 @@ namespace UPJAR
 
                 for (int count = 0; count < ASSET_COUNT; count++)
                 {
-                    DownloadFile(assetList[member].asset, assetList[member].image1, "cubeImage0.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image2, "cubeImage1.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image3, "cubeImage2.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image4, "cubeImage3.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image5, "cubeImage4.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image6, "cubeImage5.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image7, "cubeImage6.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image8, "cubeImage7.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image9, "cubeImage8.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image10, "cubeImage9.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image11, "cubeImage10.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].image12, "cubeImage11.jpg", newDirectory);
-                    DownloadFile(assetList[member].asset, assetList[member].audio, "audio.mp3", newDirectory);
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image1, "cubeImage0.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image2, "cubeImage1.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image3, "cubeImage2.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image4, "cubeImage3.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image5, "cubeImage4.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image6, "cubeImage5.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image7, "cubeImage6.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image8, "cubeImage7.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image9, "cubeImage8.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image10, "cubeImage9.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image11, "cubeImage10.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image12, "cubeImage11.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].audio, "audio.mp3", newDirectory));
                 }
             }
             View.InvokeOnMainThread(() =>
