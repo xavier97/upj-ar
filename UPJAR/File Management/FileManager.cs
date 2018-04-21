@@ -1,4 +1,4 @@
-﻿using Foundation;
+using Foundation;
 using Newtonsoft.Json;
 using System;
 using SystemConfiguration;
@@ -128,6 +128,7 @@ namespace UPJAR
                     await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image10, "cubeImage9.jpg", newDirectory));
                     await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image11, "cubeImage10.jpg", newDirectory));
                     await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image12, "cubeImage11.jpg", newDirectory));
+                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].audio, "audio.mp3", newDirectory));
                 }
             }
             View.InvokeOnMainThread(() =>
