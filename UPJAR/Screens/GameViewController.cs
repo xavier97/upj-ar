@@ -5,6 +5,9 @@ using ARKit;
 using CoreGraphics;
 using SceneKit;
 using UIKit;
+using Foundation;
+using AVFoundation;
+
 
 namespace UPJAR
 {
@@ -14,11 +17,14 @@ namespace UPJAR
         private string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         private int assetKey = -1;
         private List<CubeDetail> assetList;
-
+        public AVAudioPlayer thhing;
+        public NSUrl url;
         protected GameViewController(IntPtr handle) : base(handle)
         {
             Console.WriteLine(path);
+
         }
+
 
         private SCNMaterial[] LoadMaterials()
         {
@@ -54,7 +60,7 @@ namespace UPJAR
             // This demo was originally in F# :-)   
             return joe;
         }
-
+       
         private SCNMaterial[] LoadMaterials2()
         {
 
@@ -175,8 +181,7 @@ namespace UPJAR
 
                 RefreshDataAsync();
                
-               
-
+     
             }
             else{
                 
@@ -297,14 +302,37 @@ namespace UPJAR
         /// </summary>
         private void AddFooter()
         {
+           
+
+            string textureFolderPath = path + "/asset" + assetKey;
+            string[] Files = Directory.GetFiles(textureFolderPath, "*.mp3");
+
+            url = NSUrl.FromFilename(Files[0]);
+            thhing = AVAudioPlayer.FromUrl(url);
+
+
             // Make footer buttons here.
             this.SetToolbarItems(new UIBarButtonItem[] {
-                new UIBarButtonItem(UIBarButtonSystemItem.Refresh, (s,e) =>
+                new UIBarButtonItem(UIBarButtonSystemItem.Play, (s,e) =>
                 {
-                    Console.WriteLine("Refresh clicked");
+
+                   
+                     if (thhing.Playing != true)
+                    {
+                        thhing.Play();
+                    }
+                    else
+                    {
+                        thhing.Stop();
+                    }
+
+                   
+
+
+
                 })
                 , new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace) { Width = 50 }
-                , new UIBarButtonItem(UIBarButtonSystemItem.Pause, (s,e) => {
+                , new UIBarButtonItem(UIBarButtonSystemItem.Organize, (s,e) => {
                     Console.WriteLine ("Pause clicked");
                 })
             }, false);
@@ -312,10 +340,17 @@ namespace UPJAR
             this.NavigationController.ToolbarHidden = false;
         }
 
-        public override void DidReceiveMemoryWarning()
+
+
+		
+
+
+		public override void DidReceiveMemoryWarning()
         {
+           
             base.DidReceiveMemoryWarning();
             // Release any cached data, images, etc that aren't in use.
+           
         }
 
         public override void ViewDidLoad()
@@ -328,12 +363,27 @@ namespace UPJAR
 
         }
 
+		public override void ViewWillDisappear(bool animated)
+		{
 
-        public override void ViewWillAppear(bool animated)
+            //Turns off the sound playing if the view disapears
+          
+            if (thhing != null)
+            {
+                if (thhing.Playing == true)
+                {
+                    thhing.Stop();
+                }
+            }
+			base.ViewWillDisappear(animated);
+		}
+		public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
 
         }
+
+
 
     }
 }
