@@ -171,18 +171,27 @@ namespace UPJAR
                     count++;
                 }
 
+                if(assetKey == -1){
+                    assetKey = -2;
+                }
+
             }
             Console.WriteLine(assetKey);
             if (assetKey == -1)
             {
                 
-                var detailAlert = UIAlertController.Create("About the QR location...","helo", UIAlertControllerStyle.Alert);
-                detailAlert.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
-
-
-                RefreshDataAsync();
+                    
+                 NavigationController.PopViewController(true);
                
-     
+
+
+               
+            }
+            else if(assetKey == -2){
+                
+                var alert1 = UIAlertController.Create("QR Invalid", "The QR Code you scanned is invalid please use QR codes located at tour locations", UIAlertControllerStyle.Alert);
+                alert1.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Cancel, alert => NavigationController.PopViewController(true)));
+                PresentViewController(alert1, true, null);
             }
             else{
                 
