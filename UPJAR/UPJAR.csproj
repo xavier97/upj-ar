@@ -19,7 +19,7 @@
     <DefineConstants>DEBUG;ENABLE_TEST_CLOUD;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodesignKey>iPhone Developer: march17spirit97animalluver@gmail.com (F6S34T6UG6)</CodesignKey>
+    <CodesignKey>iPhone Developer: afeather20@gmail.com (8CANGQ5W47)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
     <MtouchFastDev>true</MtouchFastDev>
@@ -28,7 +28,7 @@
     <MtouchArch>x86_64</MtouchArch>
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
     <PlatformTarget>x86</PlatformTarget>
-    <CodesignProvision>iOS Team Provisioning Profile: com.acme.UPJ-AR-Grace</CodesignProvision>
+    <CodesignProvision>iOS Team Provisioning Profile: com.acme.UPJ-AR.upj-ar-ios-9</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>pdbonly</DebugType>
@@ -65,7 +65,7 @@
     <DefineConstants>DEBUG;ENABLE_TEST_CLOUD;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodesignKey>iPhone Developer: nejixavier@yahoo.com (5PB9AZDDKA)</CodesignKey>
+    <CodesignKey>iPhone Developer: afeather20@gmail.com (8CANGQ5W47)</CodesignKey>
     <DeviceSpecificBuild>true</DeviceSpecificBuild>
     <MtouchDebug>true</MtouchDebug>
     <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
@@ -77,7 +77,7 @@
     <MtouchArch>ARM64</MtouchArch>
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
     <PlatformTarget>x86</PlatformTarget>
-    <CodesignProvision>iOS Team Provisioning Profile: com.acme.UPJ-AR</CodesignProvision>
+    <CodesignProvision>iOS Team Provisioning Profile: com.acme.UPJ-AR.upj-ar-ios-9</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
