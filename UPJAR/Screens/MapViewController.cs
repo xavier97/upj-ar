@@ -5,6 +5,7 @@ using Foundation;
 using MapKit;
 using System;
 using UIKit;
+using System.Drawing;
 
 namespace UPJAR
 {
@@ -17,7 +18,7 @@ namespace UPJAR
         private static string pinFolderPath = path + "/asset";
         private int assetKey;
         private List<CubeDetail> assetList;
-        FileManager fileManager = new FileManager();
+
 
 
         public MapViewController(IntPtr handle) : base(handle)
@@ -66,11 +67,12 @@ namespace UPJAR
                 }
             };
 
+            FileManager fileManager = new FileManager(mapView);
             assetList = new List<CubeDetail>();
             assetList = fileManager.MakeAssetList();
             Console.WriteLine(assetList[0].ToString());
 
-            mapView.Delegate = new MapDelegate(this);
+            var myDel = new MapDelegate(this);
 
             for (int i = 0; i < assetList.Count; i++){
                 var latitude = Double.Parse(assetList[i].Lat);
@@ -80,16 +82,18 @@ namespace UPJAR
                 var cubeDesc = assetList[i].descLoc;
                 var cubeLoc = assetList[i].asset;
 
-                var imageFile = pinFolderPath + "1/cubeImage0.jpg";
+                var imageFile = path + "/asset" + i + "/cubeImage0.jpg";
                 UIImage image = UIImage.FromFile(imageFile);
+                image = MaxResizeImage(image, 50, 50);
                     
                 var annotation = new BasicMapAnnotation
-                    (new CLLocationCoordinate2D(latitude, longitude), title, desc, cubeDesc, image);
+                    (new CLLocationCoordinate2D(latitude, longitude), title, desc, cubeDesc);
+                myDel.ImageForAnnotation[annotation] = image;
                 mapView.AddAnnotation(annotation);
 
             }
 
-
+            mapView.Delegate = myDel;
 
             View.AddSubview(mapTypeSelection);
 
@@ -100,7 +104,7 @@ namespace UPJAR
                 // User denied permission or device doesn't have GPS/location ability  
                 // create our location and zoom to Chicago  
                 CLLocationCoordinate2D coords = new CLLocationCoordinate2D(40.2675, -78.8357); // UPJ
-                MKCoordinateSpan span = new MKCoordinateSpan(MilesToLatitudeDegrees(5), MilesToLongitudeDegrees(5, coords.Latitude));
+                MKCoordinateSpan span = new MKCoordinateSpan(MilesToLatitudeDegrees(.1), MilesToLongitudeDegrees(.1, coords.Latitude));
 
                 // set the coords and zoom on the map  
                 mapView.Region = new MKCoordinateRegion(coords, span);
@@ -152,19 +156,17 @@ namespace UPJAR
                 }
             }
 
-            public BasicMapAnnotation(CLLocationCoordinate2D coordinate, string title, string subtitle, string location, UIImage image)
+            public BasicMapAnnotation(CLLocationCoordinate2D coordinate, string title, string subtitle, string location)
             {
                 this.coord = coordinate;
                 this.title = title;
                 this.subtitle = subtitle;
                 this.location = location;
-                this.cubeLocation = image;
-
             }
 
 			public override string ToString()
 			{
-                return string.Format(coord.ToString() + ',' + title + ',' + subtitle + ',' + location + ',' + cubeLocation);
+                return string.Format(coord.ToString() + ',' + title + ',' + subtitle + ',' + location);
 			}
 		}
 
@@ -174,10 +176,12 @@ namespace UPJAR
             UIButton detailButton;
             MapViewController parent;
             UIImageView image;
+            public Dictionary<IMKAnnotation, UIImage> ImageForAnnotation { get; }
 
             public MapDelegate(MapViewController parent)
             {
                 this.parent = parent;
+                ImageForAnnotation = new Dictionary<IMKAnnotation, UIImage>();
             }
 
 
@@ -191,14 +195,14 @@ namespace UPJAR
 
                 // if we couldn't dequeue one, create a new one
                 if (annotationView == null)
-                    annotationView = new MKPinAnnotationView(annotation as BasicMapAnnotation, annotationIdentifier);
+                    annotationView = new MKAnnotationView(annotation, annotationIdentifier);
                 else // if we did dequeue one for reuse, assign the annotation to it
-                    annotationView.Annotation = (BasicMapAnnotation)annotation;
+                    annotationView.Annotation = annotation;
                 // configure our annotation view properties
                 annotationView.CanShowCallout = true;
-                (annotationView as MKPinAnnotationView).AnimatesDrop = true;
-                (annotationView as MKPinAnnotationView).PinColor = MKPinAnnotationColor.Green;
-
+                if(ImageForAnnotation.ContainsKey(annotation)){
+                    annotationView.Image = ImageForAnnotation[annotation];
+                }
 
                 annotationView.Selected = true;
                 // you can add an accessory view, in this case, we'll add a button on the right, and an image on the left
@@ -218,22 +222,6 @@ namespace UPJAR
                 return annotationView;
             }
 
-			public override void DidSelectAnnotationView(MKMapView mapView, MKAnnotationView view)
-			{
-
-                image = new UIImageView(new CGRect(-84, 0, 200, 200));
-                image.Image = UIImage.FromFile(path + "/asset0/cubeimage0.jpg");
-                Console.WriteLine(view.Annotation.ToString());
-                view.AddSubview(image);
-
-			}
-
-			public override void DidDeselectAnnotationView(MKMapView mapView, MKAnnotationView view)
-			{
-
-                image.RemoveFromSuperview();
-
-			}
 
 			public override void DidUpdateUserLocation(MKMapView mapView, MKUserLocation userLocation)
             {
@@ -271,6 +259,20 @@ namespace UPJAR
             public override void RegionChanged(MKMapView mapView, bool animated) { }
         }
 
+        // resize the image to be contained within a maximum width and height, keeping aspect ratio
+        public UIImage MaxResizeImage(UIImage sourceImage, float maxWidth, float maxHeight)
+        {
+            var sourceSize = sourceImage.Size;
+            var maxResizeFactor = Math.Max(maxWidth / sourceSize.Width, maxHeight / sourceSize.Height);
+            if (maxResizeFactor > 1) return sourceImage;
+            var width = maxResizeFactor * sourceSize.Width;
+            var height = maxResizeFactor * sourceSize.Height;
+            UIGraphics.BeginImageContext(new SizeF((float)width, (float)height));
+            sourceImage.Draw(new RectangleF(0, 0, (float)width, (float)height));
+            var resultImage = UIGraphics.GetImageFromCurrentImageContext();
+            UIGraphics.EndImageContext();
+            return resultImage;
+        }
 
     }
 }
