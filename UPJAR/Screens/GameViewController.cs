@@ -131,7 +131,8 @@ namespace UPJAR
 
             var result = await scanner.Scan();
 
-            FileManager fileManager = new FileManager();
+
+            FileManager fileManager = new FileManager(sceneView);
             if (assetList == null)
             {
                 assetList = new List<CubeDetail>();
