@@ -76,8 +76,9 @@ namespace UPJAR
             string onlineJson = WebJsonToString(); // text of web json
             string cachedJson = LocalJsonToString(); // text of cached json (from local .json file)
 
-            if (!string.Equals(onlineJson, cachedJson)) // Checks if there is any change to the files. if not the same, then replace cache file
+            if (!string.Equals(onlineJson, cachedJson)) // Checks if there is any change to the files. if not the same, then delete all data + replace cache file
             {
+                Directory.Delete(path, true); // Delete folders
                 CacheJsonText();
                 return true;
             }
@@ -90,11 +91,9 @@ namespace UPJAR
         /// <summary>
         /// Loads documents from web service into app
         /// </summary>
-        async private void UpdateAssets(UIView View)
+        async private Task UpdateAssets(UIView View)
         {
             Console.WriteLine("update assets");
-
-            const int ASSET_COUNT = 12; // number of assets that make up the cube/ar tour scene
 
             // Start up loading screen
             LoadingOverlay loadPop; // ref to overlay control
@@ -106,30 +105,33 @@ namespace UPJAR
                 View.Add(loadPop);
             });
 
-            for (int member = 0; member < assetList.Count; member++)
-            {
-                
-                // make a new directory to organize assets
-                newDirectory = path + "/asset" + member.ToString();
-                Directory.CreateDirectory(newDirectory);
+            Console.WriteLine("Asset list is this big: " + assetList.Count);
 
-                for (int count = 0; count < ASSET_COUNT; count++)
+            await Task.Run(() =>
+            {
+                for (int member = 0; member < assetList.Count; member++)
                 {
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image1, "cubeImage0.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image2, "cubeImage1.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image3, "cubeImage2.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image4, "cubeImage3.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image5, "cubeImage4.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image6, "cubeImage5.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image7, "cubeImage6.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image8, "cubeImage7.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image9, "cubeImage8.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image10, "cubeImage9.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image11, "cubeImage10.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].image12, "cubeImage11.jpg", newDirectory));
-                    await Task.Run(() => DownloadFile(assetList[member].asset, assetList[member].audio, "audio.mp3", newDirectory));
+                    // make a new directory to organize assets
+                    newDirectory = path + "/asset" + member.ToString();
+                    Directory.CreateDirectory(newDirectory);
+
+                    DownloadFile(assetList[member].asset, assetList[member].image1, "cubeImage0.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image2, "cubeImage1.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image3, "cubeImage2.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image4, "cubeImage3.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image5, "cubeImage4.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image6, "cubeImage5.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image7, "cubeImage6.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image8, "cubeImage7.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image9, "cubeImage8.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image10, "cubeImage9.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image11, "cubeImage10.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].image12, "cubeImage11.jpg", newDirectory);
+                    DownloadFile(assetList[member].asset, assetList[member].audio, "audio.mp3", newDirectory);
                 }
-            }
+                Console.WriteLine("comppleted?");
+            });
+
             View.InvokeOnMainThread(() =>
             {
                 loadPop.Hide();
@@ -146,7 +148,7 @@ namespace UPJAR
         /// <param name="assetName">Name of asset in the asset list</param>
         /// <param name="imagename">Name the image should have once it's downloaded</param>
         /// <param name="location">local folder to store image</param>
-        private void DownloadFile(string url, string imagename,string assetName, string location)
+        private void DownloadFile(string url, string imagename, string assetName, string location)
         {
 
             // i want a real url
@@ -155,14 +157,14 @@ namespace UPJAR
             HttpWebRequest myHttpWebRequest;
             HttpWebResponse myHttpWebResponse;
 
-         try
+            try
             {
                 // Creates an HttpWebRequest for the specified URL. 
                 Console.WriteLine(assetName);
 
                 name1 = assetName;
 
-                myHttpWebRequest  = (HttpWebRequest)WebRequest.Create("http://ec2-54-191-254-89.us-west-2.compute.amazonaws.com/ar-web/assets/" + url + assetName);
+                myHttpWebRequest = (HttpWebRequest)WebRequest.Create("http://ec2-54-191-254-89.us-west-2.compute.amazonaws.com/ar-web/assets/" + url + assetName);
 
                 myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
 
@@ -181,14 +183,14 @@ namespace UPJAR
 
                     // Gets a location to store file
                     Console.WriteLine(path);
-                
+
                     Console.WriteLine(name1);
                     var newFileName = Path.Combine(location);
 
 
                     // Gets the stream containing the file for the app.
                     Console.WriteLine(newFileName);
-                    Stream fileStream = File.Create(newFileName+ "/" + imagename);
+                    Stream fileStream = File.Create(newFileName + "/" + imagename);
 
                     // Copy web stream to file stream
                     dataStream.CopyTo(fileStream);
@@ -204,14 +206,14 @@ namespace UPJAR
             catch (WebException e)
             {
                 Console.WriteLine("\nWebException raised. The following error occured : {0}", e.Status);
-               
+
             }
             catch (Exception e)
             {
                 Console.WriteLine("\nThe following Exception was raised : {0}", e.Message);
-               
+
             }
-           
+
         }
 
         #region helpers
@@ -264,8 +266,6 @@ namespace UPJAR
             string json = LocalJsonToString(); // Gets json that's local
 
             tempList = JsonConvert.DeserializeObject<List<CubeDetail>>(json); // Populate list with JSON objects
-
-
 
             return tempList;
 
