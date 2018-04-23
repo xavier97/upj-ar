@@ -33,6 +33,7 @@ namespace UPJAR
             var b = new SCNMaterial();
             var c = new SCNMaterial();
             var d = new SCNMaterial();
+            var placeholder = new SCNMaterial();
 
             // Determine types of texture to use, based on data sent by QR screen
             string textureFolderPath = path + "/asset" + assetKey;
@@ -49,6 +50,7 @@ namespace UPJAR
                 b.Diffuse.Contents = UIImage.FromFile(Files[1]);
                 c.Diffuse.Contents = UIImage.FromFile(Files[2]);
                 d.Diffuse.Contents = UIImage.FromFile(Files[3]);
+                placeholder.Diffuse.Contents = UIColor.Blue;
             }
             catch (IndexOutOfRangeException e)
             {
@@ -56,7 +58,7 @@ namespace UPJAR
                                   "Make sure enough images are in the specified folder (determined by key var).", e.Message);
             }
 
-            SCNMaterial[] joe = new SCNMaterial[] { a, b, c, d,a, a };
+            SCNMaterial[] joe = new SCNMaterial[] { a, placeholder, b, c,d, placeholder};
             // This demo was originally in F# :-)   
             return joe;
         }
@@ -68,6 +70,7 @@ namespace UPJAR
             var b = new SCNMaterial();
             var c = new SCNMaterial();
             var d = new SCNMaterial();
+            var placeholder = new SCNMaterial();
 
             // Determine types of texture to use, based on data sent by QR screen
             string textureFolderPath = path + "/asset" + assetKey;
@@ -84,6 +87,7 @@ namespace UPJAR
                 b.Diffuse.Contents = UIImage.FromFile(Files[5]);
                 c.Diffuse.Contents = UIImage.FromFile(Files[6]);
                 d.Diffuse.Contents = UIImage.FromFile(Files[7]);
+                placeholder.Diffuse.Contents = UIColor.Blue;
             }
             catch (IndexOutOfRangeException e)
             {
@@ -91,7 +95,7 @@ namespace UPJAR
                                   "Make sure enough images are in the specified folder (determined by key var).", e.Message);
             }
 
-            SCNMaterial[] joe = new SCNMaterial[] { a, b, c, d, a, a };
+            SCNMaterial[] joe = new SCNMaterial[] {  a,placeholder, b, c, d, placeholder };
             // This demo was originally in F# :-)   
             return joe;
         }
@@ -102,6 +106,7 @@ namespace UPJAR
             var b = new SCNMaterial();
             var c = new SCNMaterial();
             var d = new SCNMaterial();
+            var placeholder = new SCNMaterial();
 
             // Determine types of texture to use, based on data sent by QR screen
             string textureFolderPath = path + "/asset" + assetKey;
@@ -118,6 +123,7 @@ namespace UPJAR
                 b.Diffuse.Contents = UIImage.FromFile(Files[9]);
                 c.Diffuse.Contents = UIImage.FromFile(Files[10]);
                 d.Diffuse.Contents = UIImage.FromFile(Files[11]);
+                placeholder.Diffuse.Contents = UIColor.Blue;
             }
             catch (IndexOutOfRangeException e)
             {
@@ -125,7 +131,7 @@ namespace UPJAR
                                   "Make sure enough images are in the specified folder (determined by key var).", e.Message);
             }
 
-            SCNMaterial[] joe = new SCNMaterial[] { a, b, c, d, a, a };
+            SCNMaterial[] joe = new SCNMaterial[] {   a,placeholder, b, c, d,  placeholder};
             // This demo was originally in F# :-)   
             return joe;
         }
@@ -209,10 +215,10 @@ namespace UPJAR
             // TODO: TEST THIS
             AddFooter(); // Add footer with buttons
 
-            var configuration = new ARWorldTrackingConfiguration
-            {
-                PlaneDetection = ARPlaneDetection.Horizontal,
-                LightEstimationEnabled = true
+                var configuration = new ARWorldTrackingConfiguration
+                {
+                    PlaneDetection  = ARPlaneDetection.Horizontal,
+                    LightEstimationEnabled = true
             };
 
             configuration.PlaneDetection = ARPlaneDetection.Horizontal;
