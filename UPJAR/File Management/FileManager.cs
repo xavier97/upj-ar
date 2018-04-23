@@ -78,7 +78,7 @@ namespace UPJAR
 
             if (!string.Equals(onlineJson, cachedJson)) // Checks if there is any change to the files. if not the same, then delete all data + replace cache file
             {
-                Directory.Delete(path, true); // Delete folders
+                DeleteDirectories(); // Delete folders
                 CacheJsonText();
                 return true;
             }
@@ -88,10 +88,22 @@ namespace UPJAR
             }
         }
 
+        private void DeleteDirectories()
+        {
+            for (int count = 0; count < assetList.Count; count++)
+            {
+                Directory.Delete(path + "/asset" + count, true);
+            }
+
+            File.Delete("assets.json");
+
+            Console.WriteLine("Documents folder should be empty...");
+        }
+
         /// <summary>
         /// Loads documents from web service into app
         /// </summary>
-        async private Task UpdateAssets(UIView View)
+        async private void UpdateAssets(UIView View)
         {
             Console.WriteLine("update assets");
 
