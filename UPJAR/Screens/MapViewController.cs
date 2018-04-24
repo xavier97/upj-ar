@@ -85,16 +85,14 @@ namespace UPJAR
                 var latitude = Double.Parse(assetList[i].Lat);
                 var longitude = Double.Parse(assetList[i].Long);
                 var title = assetList[i].name;
-                var desc = assetList[i].desc;
                 var cubeDesc = assetList[i].descLoc;
                 var cubeLoc = assetList[i].asset;
-
                 var imageFile = path + "/asset" + i + "/cubeImage0.jpg";
                 UIImage image = UIImage.FromFile(imageFile);
                 image = MaxResizeImage(image, 50, 50);
 
                 var annotation = new BasicMapAnnotation
-                    (new CLLocationCoordinate2D(latitude, longitude), title, desc, cubeDesc);
+                    (new CLLocationCoordinate2D(latitude, longitude), title, cubeDesc);
                 myDel.ImageForAnnotation[annotation] = image;
                 mapView.AddAnnotation(annotation);
 
@@ -123,7 +121,7 @@ namespace UPJAR
         class BasicMapAnnotation : MKAnnotation
         {
             CLLocationCoordinate2D coord;
-            string title, subtitle, location;
+            string title, location;
 
             public override CLLocationCoordinate2D Coordinate { get { return coord; } }
             public override void SetCoordinate(CLLocationCoordinate2D value)
@@ -131,7 +129,6 @@ namespace UPJAR
                 coord = value;
             }
             public override string Title { get { return title; } }
-            public override string Subtitle { get { return subtitle; } }
 
 
 
@@ -143,18 +140,17 @@ namespace UPJAR
                 }
             }
 
-            public BasicMapAnnotation(CLLocationCoordinate2D coordinate, string title, string subtitle, string location)
+            public BasicMapAnnotation(CLLocationCoordinate2D coordinate, string title, string location)
             {
                 this.coord = coordinate;
                 this.title = title;
-                this.subtitle = subtitle;
                 this.location = location;
 
             }
 
             public override string ToString()
             {
-                return string.Format(coord.ToString() + ',' + title + ',' + subtitle + ',' + location);
+                return string.Format(coord.ToString() + ',' + title + ',' + location);
             }
 
         }
@@ -206,6 +202,8 @@ namespace UPJAR
                     detailAlert.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
                     parent.PresentViewController(detailAlert, true, null);
                 };
+
+
                 annotationView.RightCalloutAccessoryView = detailButton;
                 annotationView.LeftCalloutAccessoryView = null;
 
