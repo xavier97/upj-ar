@@ -24,6 +24,7 @@ namespace UPJAR
         public string image11 { get; set; }
         public string image12 { get; set; }
         public string audio { get; set; }
+        public string link { get; set; }
 
         public override string ToString()
 		{

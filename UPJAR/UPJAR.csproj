@@ -142,8 +142,8 @@
     <Compile Include="File Management\FileManager.cs" />
     <Compile Include="File Management\CubeDetail.cs" />
     <Compile Include="File Management\Reachability.cs" />
-    <Compile Include="LoadingOverlay.cs" />
     <Compile Include="DescriptionOverlay.cs" />
+    <Compile Include="Screens\LoadingOverlay.cs" />
   </ItemGroup>
   <ItemGroup>
     <SceneKitAsset Include="art.scnassets\cube.dae" />

@@ -21,6 +21,7 @@ namespace UPJAR
         public bool displayed = false;
         public NSUrl url;
         public string descriptText;
+        public string siteURL;
         DescriptionOverlay loadPop; // ref to overlay control
         protected GameViewController(IntPtr handle) : base(handle)
         {
@@ -170,6 +171,7 @@ namespace UPJAR
                         assetKey = count;
                         Title = assetList[count].name;
                         descriptText = assetList[count].desc;
+                        siteURL = assetList[count].link;
                         break;
                     }
                     else

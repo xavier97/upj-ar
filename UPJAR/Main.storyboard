@@ -80,7 +80,6 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint id="5226" firstItem="2266" firstAttribute="top" secondItem="2062" secondAttribute="bottom" constant="28"/>
                             <constraint id="5227" firstItem="2266" firstAttribute="leading" secondItem="2066" secondAttribute="leadingMargin" constant="32"/>
@@ -141,5 +140,6 @@
     </scenes>
     <resources>
         <image name="Test" width="259" height="194"/>
+        <image name="art.scnassets/download.jpg" width="214" height="235"/>
     </resources>
 </document>
