@@ -46,7 +46,7 @@
                                     <constraint firstAttribute="width" constant="310" id="4369"/>
                                     <constraint firstAttribute="height" constant="185" id="4370"/>
                                 </constraints>
-                                <state key="normal" title="View Map">
+                                <state key="normal" title="Map">
                                     <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -66,7 +66,7 @@
                                     <constraint firstAttribute="width" constant="310" id="4393"/>
                                     <constraint firstAttribute="height" constant="185" id="4394"/>
                                 </constraints>
-                                <state key="normal" title="View AR">
+                                <state key="normal" title="AR Tour">
                                     <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -90,7 +90,7 @@
                             <constraint id="5231" firstItem="2266" firstAttribute="centerX" secondItem="2066" secondAttribute="centerX"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="UPJ AR Home" id="4153"/>
+                    <navigationItem key="navigationItem" title="UPJ AR" id="4153"/>
                     <connections>
                         <outlet property="HomeScreen" destination="2066" id="name-outlet-2066"/>
                         <outlet property="arButton" destination="4376" id="name-outlet-4376"/>

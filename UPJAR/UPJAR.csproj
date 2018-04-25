@@ -143,9 +143,13 @@
     <Compile Include="File Management\CubeDetail.cs" />
     <Compile Include="File Management\Reachability.cs" />
     <Compile Include="LoadingOverlay.cs" />
+    <Compile Include="DescriptionOverlay.cs" />
   </ItemGroup>
   <ItemGroup>
     <SceneKitAsset Include="art.scnassets\cube.dae" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="art.scnassets\download.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\..\UPJARTests\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\..\UPJARTests\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets')" />

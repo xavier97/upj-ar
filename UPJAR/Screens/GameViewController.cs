@@ -18,13 +18,15 @@ namespace UPJAR
         private int assetKey = -1;
         private List<CubeDetail> assetList;
         public AVAudioPlayer thhing;
+        public bool displayed = false;
         public NSUrl url;
+        public string descriptText;
+        DescriptionOverlay loadPop; // ref to overlay control
         protected GameViewController(IntPtr handle) : base(handle)
         {
             Console.WriteLine(path);
 
         }
-
 
         private SCNMaterial[] LoadMaterials()
         {
@@ -43,14 +45,13 @@ namespace UPJAR
             string[] Files = Directory.GetFiles(textureFolderPath, "*.jpg"); // Getting jpg files
 
             Console.WriteLine(Files[0]);
-
             try
             {
                 a.Diffuse.Contents = UIImage.FromFile(Files[0]);
                 b.Diffuse.Contents = UIImage.FromFile(Files[1]);
                 c.Diffuse.Contents = UIImage.FromFile(Files[2]);
                 d.Diffuse.Contents = UIImage.FromFile(Files[3]);
-                placeholder.Diffuse.Contents = UIColor.Blue;
+                placeholder.Diffuse.Contents = UIImage.FromFile("art.scnassets/download.jpg");
             }
             catch (IndexOutOfRangeException e)
             {
@@ -58,7 +59,7 @@ namespace UPJAR
                                   "Make sure enough images are in the specified folder (determined by key var).", e.Message);
             }
 
-            SCNMaterial[] joe = new SCNMaterial[] { a, placeholder, b, c,d, placeholder};
+            SCNMaterial[] joe = new SCNMaterial[] { a, b,  c,d,placeholder, placeholder};
             // This demo was originally in F# :-)   
             return joe;
         }
@@ -87,7 +88,7 @@ namespace UPJAR
                 b.Diffuse.Contents = UIImage.FromFile(Files[5]);
                 c.Diffuse.Contents = UIImage.FromFile(Files[6]);
                 d.Diffuse.Contents = UIImage.FromFile(Files[7]);
-                placeholder.Diffuse.Contents = UIColor.Blue;
+                placeholder.Diffuse.Contents = UIImage.FromFile("art.scnassets/download.jpg");
             }
             catch (IndexOutOfRangeException e)
             {
@@ -95,7 +96,7 @@ namespace UPJAR
                                   "Make sure enough images are in the specified folder (determined by key var).", e.Message);
             }
 
-            SCNMaterial[] joe = new SCNMaterial[] {  a,placeholder, b, c, d, placeholder };
+            SCNMaterial[] joe = new SCNMaterial[] {  a, b,  c, d,placeholder, placeholder };
             // This demo was originally in F# :-)   
             return joe;
         }
@@ -123,7 +124,7 @@ namespace UPJAR
                 b.Diffuse.Contents = UIImage.FromFile(Files[9]);
                 c.Diffuse.Contents = UIImage.FromFile(Files[10]);
                 d.Diffuse.Contents = UIImage.FromFile(Files[11]);
-                placeholder.Diffuse.Contents = UIColor.Blue;
+                placeholder.Diffuse.Contents = UIImage.FromFile("art.scnassets/download.jpg");
             }
             catch (IndexOutOfRangeException e)
             {
@@ -131,7 +132,7 @@ namespace UPJAR
                                   "Make sure enough images are in the specified folder (determined by key var).", e.Message);
             }
 
-            SCNMaterial[] joe = new SCNMaterial[] {   a,placeholder, b, c, d,  placeholder};
+            SCNMaterial[] joe = new SCNMaterial[] {   a,b,  c, d, placeholder, placeholder};
             // This demo was originally in F# :-)   
             return joe;
         }
@@ -139,11 +140,6 @@ namespace UPJAR
         public async void RefreshDataAsync()
         {
             Console.WriteLine("hello");
-            var scanner = new ZXing.Mobile.MobileBarcodeScanner();
-
-            var result = await scanner.Scan();
-
-
             FileManager fileManager = new FileManager(sceneView);
             if (assetList == null)
             {
@@ -154,6 +150,10 @@ namespace UPJAR
 
             Console.WriteLine(assetList.Count);
 
+            var scanner = new ZXing.Mobile.MobileBarcodeScanner();
+
+            var result = await scanner.Scan();
+           
             // if result matches location from json, pull up spec. qr; else reload qr scanner
             if (result != null)
             {
@@ -166,8 +166,10 @@ namespace UPJAR
                     if (result.Text == assetList[count].name)
                     {
                        
-                        Console.WriteLine(result.Text);
+
                         assetKey = count;
+                        Title = assetList[count].name;
+                        descriptText = assetList[count].desc;
                         break;
                     }
                     else
@@ -255,8 +257,8 @@ namespace UPJAR
             ship.Geometry.Materials = LoadMaterials();
 
 
-            ship.Position = new SCNVector3(1f, 0f, 2f);
-            ship.Scale = new SCNVector3(.4f, .4f, .4f);
+            ship.Position = new SCNVector3(1f, 0f, 0f);
+            ship.Scale = new SCNVector3(.5f, .5f, .5f);
 
             sceneView.Scene.RootNode.AddChildNode(ship);
 
@@ -272,15 +274,7 @@ namespace UPJAR
 
 
             };
-            ship2.Geometry.Materials = LoadMaterials2();
-
-            sceneView.Scene.RootNode.AddChildNode(ship2);
-
-            ship2.Position = new SCNVector3(-1f, 0f, 2f);
-           
-
-
-
+            
                 var ship3 = ship.Clone();
 
             ship3.Geometry = new SCNBox
@@ -291,25 +285,21 @@ namespace UPJAR
 
 
             };
+
+            ship2.Geometry.Materials = LoadMaterials2();
+
+            sceneView.Scene.RootNode.AddChildNode(ship2);
+            
+            ship2.Position = new SCNVector3(-1f, 0f, 1f);
+
             ship3.Geometry.Materials = LoadMaterials3();
-
-
-           
 
             sceneView.Scene.RootNode.AddChildNode(ship3);
 
-            ship3.Position = new SCNVector3(-3f, 0f, 2f);
-           
-
+            ship3.Position = new SCNVector3(-3f, 0f, 0f);
+      
             sceneView.Session.Run(configuration, ARSessionRunOptions.ResetTracking );
             
-
-            // allows the user to manipulate the camera
-
-
-            // show statistics such as fps and timing information
-          
-
             }
         }
 
@@ -325,7 +315,7 @@ namespace UPJAR
 
             url = NSUrl.FromFilename(Files[0]);
             thhing = AVAudioPlayer.FromUrl(url);
-
+           
 
             // Make footer buttons here.
             this.SetToolbarItems(new UIBarButtonItem[] {
@@ -342,24 +332,34 @@ namespace UPJAR
                         thhing.Stop();
                     }
 
-                   
-
-
-
                 })
-                , new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace) { Width = 50 }
-                , new UIBarButtonItem(UIBarButtonSystemItem.Organize, (s,e) => {
-                    Console.WriteLine ("Pause clicked");
-                })
-            }, false);
+                , new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace) {  Width = 50 }
+                , new UIBarButtonItem(UIBarButtonSystemItem.Bookmarks, (s,e) => {
+
+
+                    if(displayed == false){
+                        displayed = true;
+                        var bounds = UIScreen.MainScreen.Bounds;
+                        loadPop = new DescriptionOverlay(bounds, descriptText);
+                        View.InvokeOnMainThread(() =>
+                        {
+                            // show the loading overlay on the UI thread using the correct orientation sizing
+                            View.Add(loadPop);
+                        });
+                    }
+                    else{
+                        displayed = false;
+                        View.InvokeOnMainThread(() =>
+                        {
+                        loadPop.Hide();
+                         });                   
+                    }
+                  
+                        })
+                    }, false);
 
             this.NavigationController.ToolbarHidden = false;
         }
-
-
-
-		
-
 
 		public override void DidReceiveMemoryWarning()
         {
@@ -371,8 +371,10 @@ namespace UPJAR
 
         public override void ViewDidLoad()
         {
+           
             base.ViewDidLoad();
-            RefreshDataAsync();
+           
+            RefreshDataAsync(); 
 
 
 
@@ -395,11 +397,9 @@ namespace UPJAR
 		}
 		public override void ViewWillAppear(bool animated)
         {
+            
             base.ViewWillAppear(animated);
-
+           
         }
-
-
-
     }
 }
