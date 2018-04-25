@@ -47,8 +47,9 @@ namespace UPJAR
             mapTypeSelection.InsertSegment("Standard", 0, false);
             mapTypeSelection.InsertSegment("Satellite", 1, false);
             mapTypeSelection.InsertSegment("Hybrid", 2, false);
-            mapTypeSelection.SelectedSegment = 2; // Hybrid is the default selection  
+            mapTypeSelection.SelectedSegment = 1; // Hybrid is the default selection  
             mapTypeSelection.AutoresizingMask = UIViewAutoresizing.FlexibleTopMargin;
+            mapView.MapType = MKMapType.Satellite;
 
             //Handles the changing of the map type
             mapTypeSelection.ValueChanged += (s, e) =>
