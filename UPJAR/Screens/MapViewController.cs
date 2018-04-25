@@ -94,7 +94,7 @@ namespace UPJAR
                 image = MaxResizeImage(image, 50, 50);
 
                 var annotation = new BasicMapAnnotation
-                    (new CLLocationCoordinate2D(latitude, longitude), title, desc, cubeDesc);
+                    (new CLLocationCoordinate2D(latitude, longitude), title, cubeDesc);
                 myDel.ImageForAnnotation[annotation] = image;
                 mapView.AddAnnotation(annotation);
 
@@ -123,7 +123,7 @@ namespace UPJAR
         class BasicMapAnnotation : MKAnnotation
         {
             CLLocationCoordinate2D coord;
-            string title, subtitle, location;
+            string title, location;
 
             public override CLLocationCoordinate2D Coordinate { get { return coord; } }
             public override void SetCoordinate(CLLocationCoordinate2D value)
@@ -131,7 +131,6 @@ namespace UPJAR
                 coord = value;
             }
             public override string Title { get { return title; } }
-            public override string Subtitle { get { return subtitle; } }
 
 
 
@@ -143,18 +142,17 @@ namespace UPJAR
                 }
             }
 
-            public BasicMapAnnotation(CLLocationCoordinate2D coordinate, string title, string subtitle, string location)
+            public BasicMapAnnotation(CLLocationCoordinate2D coordinate, string title, string location)
             {
                 this.coord = coordinate;
                 this.title = title;
-                this.subtitle = subtitle;
                 this.location = location;
 
             }
 
             public override string ToString()
             {
-                return string.Format(coord.ToString() + ',' + title + ',' + subtitle + ',' + location);
+                return string.Format(coord.ToString() + ',' + title + ',' + location);
             }
 
         }
@@ -167,6 +165,7 @@ namespace UPJAR
             UIButton detailButton;
             MapViewController parent;
             public Dictionary<IMKAnnotation, UIImage> ImageForAnnotation { get; }
+            UIImageView image;
 
             public MapDelegate(MapViewController parent)
             {
@@ -183,17 +182,19 @@ namespace UPJAR
 
                 // if we couldn't dequeue one, create a new one
                 if (annotationView == null)
-                    annotationView = new MKAnnotationView(annotation, annotationIdentifier);
+                    annotationView = new MKPinAnnotationView(annotation, annotationIdentifier);
                 else // if we did dequeue one for reuse, assign the annotation to it
                     annotationView.Annotation = annotation;
                 // configure our annotation view properties
+                (annotationView as MKPinAnnotationView).AnimatesDrop = true;
+                (annotationView as MKPinAnnotationView).PinColor = MKPinAnnotationColor.Green;
                 annotationView.CanShowCallout = true;
 
                 //applies the image if it exists
-                if (ImageForAnnotation.ContainsKey(annotation))
-                {
-                    annotationView.Image = ImageForAnnotation[annotation];
-                }
+                //if (ImageForAnnotation.ContainsKey(annotation))
+                //{
+                 //   annotationView.Image = ImageForAnnotation[annotation];
+               // }
 
                 annotationView.Selected = true;
                 // you can add an accessory view, in this case, we'll add a button on the right, and an image on the left
@@ -214,8 +215,20 @@ namespace UPJAR
                 return annotationView;
             }
 
+			public override void DidSelectAnnotationView(MKMapView mapView, MKAnnotationView view)
+			{
+                image = new UIImageView(new CGRect(-32, 0, 75, 75));
+                image.Image = ImageForAnnotation[view.Annotation];
+                view.AddSubview(image);
+			}
 
-            public override void DidUpdateUserLocation(MKMapView mapView, MKUserLocation userLocation)
+			public override void DidDeselectAnnotationView(MKMapView mapView, MKAnnotationView view)
+            {
+                image.RemoveFromSuperview();
+			}
+
+
+			public override void DidUpdateUserLocation(MKMapView mapView, MKUserLocation userLocation)
             {
                 mapView.DidUpdateUserLocation += (sender, e) =>
                 {
