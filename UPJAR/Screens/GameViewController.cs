@@ -344,7 +344,15 @@ namespace UPJAR
                     }
 
                 })
-                , new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace) {  Width = 50 }
+                , new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace) {  Width = 20 }
+                , new UIBarButtonItem(UIBarButtonSystemItem.Search, (s,e) =>{
+
+
+
+
+
+                })
+                , new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace) {  Width = 20 }
                 , new UIBarButtonItem(UIBarButtonSystemItem.Bookmarks, (s,e) => {
 
 
