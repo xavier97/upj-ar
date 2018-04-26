@@ -39,7 +39,7 @@ namespace UPJAR
             location.RequestWhenInUseAuthorization();
 
             // Indicates User Location  
-         
+
             mapView.ShowsUserLocation = true;
             Console.WriteLine(mapView.UserLocation);
             Console.WriteLine(mapView.UserLocationVisible);
@@ -103,6 +103,7 @@ namespace UPJAR
                 mapView.AddAnnotation(annotation);
 
             }
+
 
             mapView.Delegate = myDel;
             #endregion
@@ -181,6 +182,11 @@ namespace UPJAR
             //Gets the view of the annotations
             public override MKAnnotationView GetViewForAnnotation(MKMapView mapView, IMKAnnotation annotation)
             {
+                if (annotation.Coordinate.Equals(mapView.UserLocation.Coordinate))
+                {
+                    return null;
+                }
+
                 // try and dequeue the annotation view
                 MKAnnotationView annotationView = mapView.DequeueReusableAnnotation(annotationIdentifier);
 
@@ -190,15 +196,13 @@ namespace UPJAR
                 else // if we did dequeue one for reuse, assign the annotation to it
                     annotationView.Annotation = annotation;
                 // configure our annotation view properties
+
+
+
                 (annotationView as MKPinAnnotationView).AnimatesDrop = true;
                 (annotationView as MKPinAnnotationView).PinColor = MKPinAnnotationColor.Green;
                 annotationView.CanShowCallout = true;
 
-                //applies the image if it exists
-                //if (ImageForAnnotation.ContainsKey(annotation))
-                //{
-                 //   annotationView.Image = ImageForAnnotation[annotation];
-               // }
 
                 annotationView.Selected = true;
                 // you can add an accessory view, in this case, we'll add a button on the right, and an image on the left
