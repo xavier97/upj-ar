@@ -79,6 +79,16 @@
                                     <segue destination="BV1-FR-VrT" kind="show" id="4687"/>
                                 </connections>
                             </button>
+                            <containerView contentMode="scaleToFill" id="6006" translatesAutoresizingMaskIntoConstraints="NO">
+                                <rect key="frame" x="52" y="208" width="310" height="369"/>
+                                <connections>
+                                    <segue id="6228" destination="5999" kind="embed"/>
+                                </connections>
+                                <constraints>
+                                    <constraint id="6017" firstItem="6006" firstAttribute="height" constant="369"/>
+                                    <constraint id="6018" firstItem="6006" firstAttribute="width" constant="310"/>
+                                </constraints>
+                            </containerView>
                         </subviews>
                         <constraints>
                             <constraint id="5226" firstItem="2266" firstAttribute="top" secondItem="2062" secondAttribute="bottom" constant="28"/>
@@ -87,6 +97,8 @@
                             <constraint id="5229" firstItem="4376" firstAttribute="leading" secondItem="2066" secondAttribute="leadingMargin" constant="32"/>
                             <constraint id="5230" firstItem="4376" firstAttribute="centerX" secondItem="2066" secondAttribute="centerX"/>
                             <constraint id="5231" firstItem="2266" firstAttribute="centerX" secondItem="2066" secondAttribute="centerX"/>
+                            <constraint id="6015" firstItem="6006" firstAttribute="centerX" secondItem="2066" secondAttribute="centerX"/>
+                            <constraint id="6016" firstItem="6006" firstAttribute="centerY" secondItem="4376" secondAttribute="centerY"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="UPJ AR" id="4153"/>
@@ -94,6 +106,7 @@
                         <outlet property="HomeScreen" destination="2066" id="name-outlet-2066"/>
                         <outlet property="arButton" destination="4376" id="name-outlet-4376"/>
                         <outlet property="mapButton" destination="2266" id="name-outlet-2266"/>
+                        <outlet property="InstructionContainerView" destination="6006" id="name-outlet-6006"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2067" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -136,6 +149,13 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4053" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="930" y="803"/>
+        </scene>
+        <scene sceneID="5998">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="5999" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6000" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1535" y="1933"/>
         </scene>
     </scenes>
     <resources>

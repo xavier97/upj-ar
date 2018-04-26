@@ -106,6 +106,7 @@
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
     <InterfaceDefinition Include="Main.storyboard" />
+    <InterfaceDefinition Include="InstructionViewController.xib" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -144,6 +145,10 @@
     <Compile Include="File Management\Reachability.cs" />
     <Compile Include="DescriptionOverlay.cs" />
     <Compile Include="Screens\LoadingOverlay.cs" />
+    <Compile Include="InstructionViewController.cs" />
+    <Compile Include="InstructionViewController.designer.cs">
+      <DependentUpon>InstructionViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <SceneKitAsset Include="art.scnassets\cube.dae" />

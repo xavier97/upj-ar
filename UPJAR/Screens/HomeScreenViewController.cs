@@ -24,7 +24,8 @@ namespace UPJAR
 
             HomeScreen.BackgroundColor = homeBackgroundColor;
 
-
+            mapButton.BackgroundColor = navBarBackgroundColor;
+            arButton.BackgroundColor = navBarBackgroundColor;
 
             // Check/Pull all new stuff from service once per app load
             FileManager fileManager = new FileManager(HomeScreen);
