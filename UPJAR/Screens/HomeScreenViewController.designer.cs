@@ -24,15 +24,7 @@ namespace UPJAR
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIView InstructionContainerView { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton mapButton { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIButton testButton { get; set; }
 
         [Action ("ArButton_TouchUpInside:")]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -54,19 +46,9 @@ namespace UPJAR
                 HomeScreen = null;
             }
 
-            if (InstructionContainerView != null) {
-                InstructionContainerView.Dispose ();
-                InstructionContainerView = null;
-            }
-
             if (mapButton != null) {
                 mapButton.Dispose ();
                 mapButton = null;
-            }
-
-            if (testButton != null) {
-                testButton.Dispose ();
-                testButton = null;
             }
         }
     }

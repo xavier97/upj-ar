@@ -40,13 +40,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2266">
-                                <rect key="frame" x="52" y="92" width="310" height="185"/>
+                                <rect key="frame" x="52" y="153" width="310" height="185"/>
                                 <color key="backgroundColor" white="0.66666666666666696" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="310" id="4369"/>
-                                    <constraint firstAttribute="height" constant="185" id="4370"/>
-                                </constraints>
-                                <state key="normal" title="Map">
+                                <state key="normal" backgroundImage="map_button.png">
                                     <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -58,15 +54,15 @@
                                     <action selector="MapButton_TouchUpInside:" destination="2065" eventType="touchUpInside" id="2463"/>
                                     <segue destination="2468" kind="show" id="2744"/>
                                 </connections>
+                                <constraints>
+                                    <constraint id="5734" firstItem="2266" firstAttribute="width" constant="310"/>
+                                    <constraint id="5735" firstItem="2266" firstAttribute="height" constant="185"/>
+                                </constraints>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4376">
-                                <rect key="frame" x="52" y="300" width="310" height="185"/>
+                                <rect key="frame" x="52" y="396" width="310" height="185"/>
                                 <color key="backgroundColor" white="0.66666666666666696" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="310" id="4393"/>
-                                    <constraint firstAttribute="height" constant="185" id="4394"/>
-                                </constraints>
-                                <state key="normal" title="AR Tour">
+                                <state key="normal" backgroundImage="ar_button.PNG">
                                     <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -78,27 +74,17 @@
                                     <action selector="ArButton_TouchUpInside:" destination="2065" eventType="touchUpInside" id="4689"/>
                                     <segue destination="BV1-FR-VrT" kind="show" id="4687"/>
                                 </connections>
-                            </button>
-                            <containerView contentMode="scaleToFill" id="6006" translatesAutoresizingMaskIntoConstraints="NO">
-                                <rect key="frame" x="52" y="208" width="310" height="369"/>
-                                <connections>
-                                    <segue id="6228" destination="5999" kind="embed"/>
-                                </connections>
                                 <constraints>
-                                    <constraint id="6017" firstItem="6006" firstAttribute="height" constant="369"/>
-                                    <constraint id="6018" firstItem="6006" firstAttribute="width" constant="310"/>
+                                    <constraint id="5738" firstItem="4376" firstAttribute="width" constant="310"/>
+                                    <constraint id="5739" firstItem="4376" firstAttribute="height" constant="185"/>
                                 </constraints>
-                            </containerView>
+                            </button>
                         </subviews>
                         <constraints>
-                            <constraint id="5226" firstItem="2266" firstAttribute="top" secondItem="2062" secondAttribute="bottom" constant="28"/>
-                            <constraint id="5227" firstItem="2266" firstAttribute="leading" secondItem="2066" secondAttribute="leadingMargin" constant="32"/>
-                            <constraint id="5228" firstItem="4376" firstAttribute="top" secondItem="2266" secondAttribute="bottom" constant="23"/>
-                            <constraint id="5229" firstItem="4376" firstAttribute="leading" secondItem="2066" secondAttribute="leadingMargin" constant="32"/>
-                            <constraint id="5230" firstItem="4376" firstAttribute="centerX" secondItem="2066" secondAttribute="centerX"/>
-                            <constraint id="5231" firstItem="2266" firstAttribute="centerX" secondItem="2066" secondAttribute="centerX"/>
-                            <constraint id="6015" firstItem="6006" firstAttribute="centerX" secondItem="2066" secondAttribute="centerX"/>
-                            <constraint id="6016" firstItem="6006" firstAttribute="centerY" secondItem="4376" secondAttribute="centerY"/>
+                            <constraint id="5732" firstItem="2266" firstAttribute="centerX" secondItem="2066" secondAttribute="centerX"/>
+                            <constraint id="5733" firstItem="2066" firstAttribute="centerY" secondItem="2266" secondAttribute="centerY" constant="122"/>
+                            <constraint id="5736" firstItem="4376" firstAttribute="centerX" secondItem="2066" secondAttribute="centerX"/>
+                            <constraint id="5737" firstItem="4376" firstAttribute="centerY" secondItem="2066" secondAttribute="centerY" constant="120"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="UPJ AR" id="4153"/>
@@ -106,7 +92,6 @@
                         <outlet property="HomeScreen" destination="2066" id="name-outlet-2066"/>
                         <outlet property="arButton" destination="4376" id="name-outlet-4376"/>
                         <outlet property="mapButton" destination="2266" id="name-outlet-2266"/>
-                        <outlet property="InstructionContainerView" destination="6006" id="name-outlet-6006"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2067" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -150,16 +135,12 @@
             </objects>
             <point key="canvasLocation" x="930" y="803"/>
         </scene>
-        <scene sceneID="5998">
-            <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="5999" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6000" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1535" y="1933"/>
-        </scene>
     </scenes>
     <resources>
         <image name="Test" width="259" height="194"/>
         <image name="art.scnassets/download.jpg" width="214" height="235"/>
+        <image name="loadddddd.jpg" width="2588" height="4600"/>
+        <image name="ar_button.PNG" width="192" height="117"/>
+        <image name="map_button.png" width="191" height="120"/>
     </resources>
 </document>

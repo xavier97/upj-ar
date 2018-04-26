@@ -106,7 +106,6 @@
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
     <InterfaceDefinition Include="Main.storyboard" />
-    <InterfaceDefinition Include="InstructionViewController.xib" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -143,12 +142,8 @@
     <Compile Include="File Management\FileManager.cs" />
     <Compile Include="File Management\CubeDetail.cs" />
     <Compile Include="File Management\Reachability.cs" />
-    <Compile Include="DescriptionOverlay.cs" />
     <Compile Include="Screens\LoadingOverlay.cs" />
-    <Compile Include="InstructionViewController.cs" />
-    <Compile Include="InstructionViewController.designer.cs">
-      <DependentUpon>InstructionViewController.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Screens\DescriptionOverlay.cs" />
   </ItemGroup>
   <ItemGroup>
     <SceneKitAsset Include="art.scnassets\cube.dae" />
@@ -156,6 +151,8 @@
   <ItemGroup>
     <BundleResource Include="art.scnassets\download.jpg" />
     <BundleResource Include="Resources\loadddddd.jpg" />
+    <BundleResource Include="Resources\ar_button.PNG" />
+    <BundleResource Include="Resources\map_button.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\..\UPJARTests\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\..\UPJARTests\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets')" />
