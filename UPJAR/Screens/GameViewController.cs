@@ -272,8 +272,8 @@ namespace UPJAR
                 ship.Geometry.Materials = LoadMaterials();
 
 
-                ship.Position = new SCNVector3(0f, 0f, 5f);
-                ship.Scale = new SCNVector3(.5f, .5f, .5f);
+                ship.Position = new SCNVector3(0f, .1f, 5f);
+                ship.Scale = new SCNVector3(1f, 1f, 1f);
 
                 sceneView.Scene.RootNode.AddChildNode(ship);
 
@@ -305,13 +305,13 @@ namespace UPJAR
 
                 sceneView.Scene.RootNode.AddChildNode(ship2);
 
-                ship2.Position = new SCNVector3(3f, 0f, 3f);
+                ship2.Position = new SCNVector3(4f, .1f, 3f);
 
                 ship3.Geometry.Materials =  LoadMaterials3();
 
                 sceneView.Scene.RootNode.AddChildNode(ship3);
 
-                ship3.Position =  new  SCNVector3(-3f, 0f, 3f);
+                ship3.Position =  new  SCNVector3(-4f,  .1f, 3f);
 
                
 
