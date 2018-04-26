@@ -200,7 +200,7 @@ namespace UPJAR
 
 
                 (annotationView as MKPinAnnotationView).AnimatesDrop = true;
-                (annotationView as MKPinAnnotationView).PinColor = MKPinAnnotationColor.Green;
+                (annotationView as MKPinAnnotationView).PinColor = MKPinAnnotationColor.Red;
                 annotationView.CanShowCallout = true;
 
 
