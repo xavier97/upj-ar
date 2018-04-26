@@ -30,6 +30,14 @@ namespace UPJAR
             base.ViewDidLoad();
             // Perform any additional setup after loading the view, typically from a nib.
 
+            string welcome = "From this map you can see all the tour stops containing a QR code.";
+
+            //Create Alert
+            var okAlertController = UIAlertController.Create("Welcome to the map", welcome, UIAlertControllerStyle.Alert);
+            okAlertController.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
+            PresentViewController(okAlertController, true, null);
+
+
             Title = "UPJ Tour";
 
             mapView = new MKMapView(UIScreen.MainScreen.Bounds);
