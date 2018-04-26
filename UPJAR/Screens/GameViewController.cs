@@ -7,7 +7,7 @@ using SceneKit;
 using UIKit;
 using Foundation;
 using AVFoundation;
-
+using SafariServices;
 
 namespace UPJAR
 {
@@ -353,7 +353,10 @@ namespace UPJAR
                 , new UIBarButtonItem(UIBarButtonSystemItem.Search, (s,e) =>{
 
 
+                    var url = new NSUrl(siteURL);
+                    var sfViewController = new SFSafariViewController(url);
 
+                    PresentViewController(sfViewController, true, null);
 
 
                 })

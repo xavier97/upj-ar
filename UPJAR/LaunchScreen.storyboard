@@ -45,5 +45,7 @@
         <image name="Test" width="259" height="194"/>
         <image name="art.scnassets/download.jpg" width="214" height="235"/>
         <image name="loadddddd.jpg" width="2588" height="4600"/>
+        <image name="ar_button.PNG" width="192" height="117"/>
+        <image name="map_button.png" width="191" height="120"/>
     </resources>
 </document>

@@ -39,7 +39,10 @@ namespace UPJAR
             location.RequestWhenInUseAuthorization();
 
             // Indicates User Location  
+         
             mapView.ShowsUserLocation = true;
+            Console.WriteLine(mapView.UserLocation);
+            Console.WriteLine(mapView.UserLocationVisible);
             #region map type
             // This snippet lets you toggle between Map Types  
             int typesWidth = 260, typesHeight = 30, distanceFromBottom = 60;
@@ -200,16 +203,29 @@ namespace UPJAR
                 annotationView.Selected = true;
                 // you can add an accessory view, in this case, we'll add a button on the right, and an image on the left
                 detailButton = UIButton.FromType(UIButtonType.DetailDisclosure);
-                detailButton.TouchUpInside += (s, e) =>
-                {
-                    Console.WriteLine("Clicked");
-                    //Create Alert (can use an alert to give cube location for each given spot)-
-                    var detailAlert = UIAlertController.Create("About the QR location...", (annotation as BasicMapAnnotation).GetLocation, UIAlertControllerStyle.Alert);
-                    detailAlert.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
-                    parent.PresentViewController(detailAlert, true, null);
-                };
-                annotationView.RightCalloutAccessoryView = detailButton;
-                annotationView.LeftCalloutAccessoryView = null;
+
+
+                    detailButton.TouchUpInside += (s, e) =>
+                    {
+                        try
+                        {
+
+
+                            Console.WriteLine("Clicked");
+                            //Create Alert (can use an alert to give cube location for each given spot)-
+                            var detailAlert = UIAlertController.Create("About the QR location...", (annotation as BasicMapAnnotation).GetLocation, UIAlertControllerStyle.Alert);
+                            detailAlert.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
+                            parent.PresentViewController(detailAlert, true, null);
+                        }
+                    catch{
+                            Console.WriteLine("helo");
+                    }
+                    };
+                    annotationView.RightCalloutAccessoryView = detailButton;
+                    annotationView.LeftCalloutAccessoryView = null;
+                   
+
+
 
 
 
@@ -218,9 +234,17 @@ namespace UPJAR
 
 			public override void DidSelectAnnotationView(MKMapView mapView, MKAnnotationView view)
 			{
-                image = new UIImageView(new CGRect(-32, 0, 75, 75));
-                image.Image = ImageForAnnotation[view.Annotation];
-                view.AddSubview(image);
+                try
+                {
+                    image = new UIImageView(new CGRect(-32, 0, 75, 75));
+                    image.Image = ImageForAnnotation[view.Annotation];
+                    view.AddSubview(image);
+                }
+                catch{
+                    Console.WriteLine("hello");
+                }
+
+               
 			}
 
 			public override void DidDeselectAnnotationView(MKMapView mapView, MKAnnotationView view)
@@ -231,15 +255,13 @@ namespace UPJAR
 
 			public override void DidUpdateUserLocation(MKMapView mapView, MKUserLocation userLocation)
             {
-                mapView.DidUpdateUserLocation += (sender, e) =>
-                {
+                
                     if (mapView.UserLocation != null)
                     {
                         CLLocationCoordinate2D coords = mapView.UserLocation.Coordinate;
                         MKCoordinateSpan span = new MKCoordinateSpan(parent.MilesToLatitudeDegrees(2), parent.MilesToLongitudeDegrees(2, coords.Latitude));
                         mapView.Region = new MKCoordinateRegion(coords, span);
                     }
-                };
             }
 
 

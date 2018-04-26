@@ -54,5 +54,9 @@
 	<string>To augment your reality</string>
 	<key>UIFileSharingEnabled</key>
 	<true/>
+	<key>NSLocationAlwaysUsageDescription</key>
+<string>Your message goes here</string>
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>Your message goes here</string>
 </dict>
 </plist>
