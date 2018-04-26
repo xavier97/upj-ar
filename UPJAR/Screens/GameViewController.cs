@@ -316,12 +316,15 @@ namespace UPJAR
             }
         }
 
+
         /// <summary>
         /// Adds footer to view.
         /// </summary>
         private void AddFooter()
         {
 
+            UIToolbar toolbar = new UIToolbar();
+            toolbar.BarStyle = UIBarStyle.BlackOpaque;
 
             string textureFolderPath = path + "/asset" + assetKey;
             string[] Files = Directory.GetFiles(textureFolderPath, "*.mp3");
