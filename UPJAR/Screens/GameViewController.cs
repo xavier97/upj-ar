@@ -155,6 +155,8 @@ namespace UPJAR
 
             var result = await scanner.Scan();
 
+          
+
             // if result matches location from json, pull up spec. qr; else reload qr scanner
             if (result != null)
             {
@@ -207,13 +209,8 @@ namespace UPJAR
             }
             else
             {
-                var alert2 = UIAlertController.Create("AR Tour Activated", "Please rotate the phone around the room to find AR Cubes to explore the area", UIAlertControllerStyle.Alert);
-                var imgTitle = new UIImage();
-                imgTitle = UIImage.FromFile("art.scnassets / download.jpg");
-                var imgViewTitle = new UIImageView(new CGRect(x: 10, y: 10, width: 30, height: 30));
-                imgViewTitle.Image = imgTitle;
-                alert2.View.AddSubview(imgViewTitle);
-                alert2.View.AddSubview(imgViewTitle);
+
+                var alert2 = UIAlertController.Create("AR Tour Activated", "Please turn around and search for augmented reality tour objects(cubes)", UIAlertControllerStyle.Alert);
                 alert2.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Cancel, null));
                 PresentViewController(alert2, true, null);
 
@@ -225,19 +222,24 @@ namespace UPJAR
                     UserInteractionEnabled = true
                 };
 
-                View.AddSubview(sceneView);
+               
 
                 // TODO: TEST THIS
                 AddFooter(); // Add footer with buttons
 
                 var configuration = new ARWorldTrackingConfiguration
                 {
-                    PlaneDetection = ARPlaneDetection.Horizontal,
-                    LightEstimationEnabled = true
+                    
+                    PlaneDetection = ARPlaneDetection.None
                 };
 
-                configuration.PlaneDetection = ARPlaneDetection.Horizontal;
+
+
                 sceneView.Scene = new SCNScene();
+
+                sceneView.Session.Run(configuration, ARSessionRunOptions.RemoveExistingAnchors);
+
+                View.AddSubview(sceneView);
 
                 var material = new SCNMaterial();
 
@@ -270,7 +272,7 @@ namespace UPJAR
                 ship.Geometry.Materials = LoadMaterials();
 
 
-                ship.Position = new SCNVector3(1f, 0f, 0f);
+                ship.Position = new SCNVector3(0f, 0f, 5f);
                 ship.Scale = new SCNVector3(.5f, .5f, .5f);
 
                 sceneView.Scene.RootNode.AddChildNode(ship);
@@ -303,18 +305,20 @@ namespace UPJAR
 
                 sceneView.Scene.RootNode.AddChildNode(ship2);
 
-                ship2.Position = new SCNVector3(-1f, 0f, 1f);
+                ship2.Position = new SCNVector3(3f, 0f, 3f);
 
-                ship3.Geometry.Materials = LoadMaterials3();
+                ship3.Geometry.Materials =  LoadMaterials3();
 
                 sceneView.Scene.RootNode.AddChildNode(ship3);
 
-                ship3.Position = new SCNVector3(-3f, 0f, 0f);
+                ship3.Position =  new  SCNVector3(-3f, 0f, 3f);
 
-                sceneView.Session.Run(configuration, ARSessionRunOptions.ResetTracking);
+               
 
             }
         }
+
+
 
 
         /// <summary>
@@ -400,15 +404,20 @@ namespace UPJAR
         {
 
             base.ViewDidLoad();
-
             RefreshDataAsync();
+           
 
 
 
 
         }
+		public override void ViewDidAppear(bool animated)
+		{
+			base.ViewDidAppear(animated);
 
-        public override void ViewWillDisappear(bool animated)
+		}
+
+		public override void ViewWillDisappear(bool animated)
         {
 
             //Turns off the sound playing if the view disapears
