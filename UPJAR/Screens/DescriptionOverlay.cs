@@ -15,7 +15,7 @@ public class DescriptionOverlay : UIView
        
         AutoresizingMask = UIViewAutoresizing.All;
 
-        nfloat labelHeight = 40;
+        nfloat labelHeight = 80;
         nfloat labelWidth = Frame.Width - 30;
 
         // derive the center x and y

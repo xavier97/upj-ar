@@ -8,6 +8,7 @@ using UIKit;
 using Foundation;
 using AVFoundation;
 using SafariServices;
+using SpriteKit;
 
 namespace UPJAR
 {
@@ -210,10 +211,8 @@ namespace UPJAR
             else
             {
 
-                var alert2 = UIAlertController.Create("AR Tour Activated", "Please turn around and search for augmented reality tour objects(cubes)", UIAlertControllerStyle.Alert);
-                alert2.AddAction(UIAlertAction.Create("Ok", UIAlertActionStyle.Cancel, null));
-                PresentViewController(alert2, true, null);
 
+                //generates the sceneview 
                 sceneView = new ARSCNView
                 {
                     Frame = View.Frame,
@@ -236,6 +235,7 @@ namespace UPJAR
 
 
                 sceneView.Scene = new SCNScene();
+
 
                 sceneView.Session.Run(configuration, ARSessionRunOptions.RemoveExistingAnchors);
 
@@ -263,17 +263,17 @@ namespace UPJAR
 
                 ship.Geometry = new SCNBox
                 {
-                    Width = 1,
-                    Height = 1,
-                    Length = 1,
+                    Width = 2,
+                    Height = 2,
+                    Length = 2,
                 };
 
 
                 ship.Geometry.Materials = LoadMaterials();
 
 
-                ship.Position = new SCNVector3(0f, .1f, 5f);
-                ship.Scale = new SCNVector3(1f, 1f, 1f);
+                ship.Position = new SCNVector3(0f, .1f, 6f);
+                //ship.Scale = new SCNVector3(1f, 1f, 1f);
 
                 sceneView.Scene.RootNode.AddChildNode(ship);
 
@@ -283,9 +283,9 @@ namespace UPJAR
 
                 ship2.Geometry = new SCNBox
                 {
-                    Width = 1,
-                    Height = 1,
-                    Length = 1,
+                    Width = 2,
+                    Height = 2,
+                    Length = 2,
 
 
                 };
@@ -294,32 +294,142 @@ namespace UPJAR
 
                 ship3.Geometry = new SCNBox
                 {
-                    Width = 1,
-                    Height = 1,
-                    Length = 1,
+                    Width = 2,
+                    Height = 2,
+                    Length = 2,
 
 
                 };
+                //clones the ships to make models of the other scenes
+                var ship4 = ship.Clone();
+
+                ship4.Geometry = new SCNPlane
+                {
+                    Width = 2,
+                    Height = 2
+                };
+
+                //var panel = ship.Clone();
+                //panel.Geometry = new SCNPlane
+                //{
+                //    Width = 1,
+                //    Height = 1
+                //};
+
+
+                //var label = new SKLabelNode();
+
+                //label.Text = assetList[assetKey].desc;
+
+
+
+                //var color2 = new SCNMaterial();
+
+                //color2.Diffuse.Contents = label;
+                //color2.DoubleSided = true;
+
+                //SCNMaterial[] color3 = new SCNMaterial[] { color2 };
+
+                //panel.Geometry.Materials = color3;
+
+
+                //Mats for the ship4 which is the welcome screen of our tour
+
+                var color = new SCNMaterial();
+
+                var info = new SCNMaterial();
+
+                info.Diffuse.Contents = UIImage.FromFile("art.scnassets/info.jpg");
+
+                SCNMaterial[] infos = new SCNMaterial[] { info };
+
+                info.DoubleSided = true;
+                var instruction1 = ship.Clone();
+
+                var instruction2 = ship.Clone();
+
+                var instruction3 = ship.Clone();
+
+
+                instruction1.Geometry = new SCNPlane
+                {
+                    Width = 2,
+                    Height = 2
+                };
+
+                instruction2.Geometry = new SCNPlane
+                {
+                    Width = 2,
+                    Height = 2
+                };
+
+
+                instruction3.Geometry = new SCNPlane
+                {
+                    Width = 2,
+                    Height = 2
+                };
+
+
+
+                instruction1.Geometry.Materials = infos;
+
+                instruction2.Geometry.Materials = infos;
+
+                instruction3.Geometry.Materials = infos;
+
+
+
+                color.Diffuse.Contents = UIImage.FromFile("art.scnassets/university-of-pittsburgh-at-johnstown_2015-11-04_15-39-42.591-1.jpg");
+
+                SCNMaterial[] colors = new SCNMaterial[] { color };
+
+                ship4.Geometry.Materials = colors;
 
                 ship2.Geometry.Materials = LoadMaterials2();
 
                 sceneView.Scene.RootNode.AddChildNode(ship2);
 
+                sceneView.Scene.RootNode.AddChildNode(instruction1);
+
+                sceneView.Scene.RootNode.AddChildNode(instruction3);
+
+
+                instruction1.Position = new SCNVector3(4f, 3f, 3f);
+
+
                 ship2.Position = new SCNVector3(4f, .1f, 3f);
+
+
 
                 ship3.Geometry.Materials =  LoadMaterials3();
 
+                sceneView.Scene.RootNode.AddChildNode(instruction2);
+
                 sceneView.Scene.RootNode.AddChildNode(ship3);
+
+
+                instruction2.Position = new SCNVector3(-4f, 4f, 3f);
+
+                instruction3.Position = new SCNVector3(0f, 4f, 6f);
 
                 ship3.Position =  new  SCNVector3(-4f,  .1f, 3f);
 
-               
+                sceneView.Scene.RootNode.AddChildNode(ship4);
+
+                ship4.Position = new SCNVector3(0f, -.5f, -3.5f);
+
+
+
+                //sceneView.Scene.RootNode.AddChildNode(panel);
+
+                //panel.Position = new SCNVector3(0f, .5f, 2f);
+
+
+
 
             }
         }
-
-
-
 
         /// <summary>
         /// Adds footer to view.
